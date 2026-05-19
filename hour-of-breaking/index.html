@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hour of Breaking &mdash; Rob Pettit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --deep: #111111;
+    --surface: #161616;
+    --line: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.35);
+    --text: rgba(255,255,255,0.82);
+    --bright: rgba(255,255,255,0.95);
+    --accent: #c9a96e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .intro-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.95;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .intro-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .intro-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--muted);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .intro-meta {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .intro-meta span { color: var(--accent); }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 2s forwards;
+  }
+
+  .scroll-cue span {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── SEQUENCE HEADER ── */
+  .sequence-header {
+    text-align: center;
+    padding: 5rem 0 4rem;
+    border-top: 1px solid var(--line);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .sequence-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .sequence-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── PHOTO CARDS ── */
+  .sequence {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .photo-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 8rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .photo-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .photo-item.reverse { direction: rtl; }
+  .photo-item.reverse > * { direction: ltr; }
+
+  .photo-frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+    cursor: zoom-in;
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+    filter: brightness(0.92);
+  }
+
+  .photo-frame:hover img {
+    transform: scale(1.03);
+    filter: brightness(1);
+  }
+
+  .photo-number {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    background: rgba(8,8,8,0.7);
+    padding: 0.2rem 0.5rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .photo-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .photo-role {
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .photo-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.1;
+    color: var(--bright);
+    margin-bottom: 1.8rem;
+  }
+
+  .photo-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.75;
+    border-left: 1px solid var(--accent);
+    padding-left: 1.2rem;
+  }
+
+  .photo-meta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 0.3rem 0.8rem;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem auto 8rem;
+    padding: 0 2rem;
+    max-width: 1400px;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .section-divider span {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* ── STATEMENT ── */
+  .statement {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem 8rem;
+  }
+
+  .statement-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .statement-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .statement-header .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--bright);
+    line-height: 1.1;
+  }
+
+  .statement-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+
+  .statement-body p:first-child::first-letter {
+    font-size: 4em;
+    float: left;
+    line-height: 0.75;
+    margin: 0.05em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+  }
+
+  .statement-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .statement-section h3 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.15); }
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    backdrop-filter: blur(6px);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    box-shadow: 0 0 80px rgba(0,0,0,0.8);
+  }
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+    color: var(--muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: 200;
+    transition: color 0.2s;
+    font-family: 'Raleway', sans-serif;
+    background: none;
+    border: none;
+  }
+  .lightbox-close:hover { color: var(--bright); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .photo-item, .photo-item.reverse {
+      grid-template-columns: 1fr;
+      direction: ltr;
+    }
+    .photo-frame { aspect-ratio: 4/3; }
+    .photo-info { padding: 2.5rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;gap:2rem;padding:1rem 2rem;background:rgba(8,8,8,0.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06);">
+  <a href="../../index.html" style="font-family:'Raleway',sans-serif;font-weight:200;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseover="this.style.color='rgba(201,169,110,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">&#8592; Rob Pettit</a>
+  <a href="../index.html" style="font-family:'Raleway',sans-serif;font-weight:200;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseover="this.style.color='rgba(201,169,110,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Art Projects</a>
+</nav>
+
+<div style="height:3.5rem;"></div>
+
+<!-- INTRO -->
+<section class="intro">
+  <p class="intro-eyebrow">A photographic series &mdash; Mumbai, 2026</p>
+  <h1 class="intro-title">The Hour<br><em>of Breaking</em></h1>
+  <p class="intro-subtitle">Mohammed Ali Road &nbsp;&middot;&nbsp; Ramadan &nbsp;&middot;&nbsp; Mumbai</p>
+  <p class="intro-meta">Rob Pettit &nbsp;&nbsp;<span>/</span>&nbsp;&nbsp; AVT 253 &nbsp;&nbsp;<span>/</span>&nbsp;&nbsp; George Mason University</p>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SEQUENCE HEADER -->
+<div class="sequence-header">
+  <h2>The Sequence</h2>
+  <p>Five photographs from a single evening on Mohammed Ali Road &mdash; tracing the rhythm of iftar from preparation to release.</p>
+</div>
+
+<!-- PHOTOS -->
+<section class="sequence">
+
+  <!-- 1 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('1-Preparing.jpg')">
+      <img src="1-Preparing.jpg" alt="Vendor at the grill, eyes closed, arm reaching over fire" loading="lazy">
+      <span class="photo-number">01</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Preparation</p>
+      <h2 class="photo-title">Ritual,<br>Not Labor</h2>
+      <p class="photo-caption">Before the breaking of the fast, a vendor at the grill with his eyes closed, arm reaching over the fire. I don't know what he was thinking about in that moment. But something in it reads as ritual rather than labor, and that felt like the right place to begin.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mohammed Ali Road</span>
+        <span class="meta-pill">Pre-Iftar</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('2-Gathering.jpg')">
+      <img src="2-Gathering.jpg" alt="Illuminated mosque tower rising above the crowded street" loading="lazy">
+      <span class="photo-number">02</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Gathering</p>
+      <h2 class="photo-title">Where<br>We Are</h2>
+      <p class="photo-caption">The illuminated tower of the mosque rising above the crowded street, the smoke, the signs, the mass of people already moving through it. This is the context. It's not a quiet or reverent scene in any conventional sense. It's loud and dense and completely alive, which is kind of the point.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mohammed Ali Road</span>
+        <span class="meta-pill">Dusk</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('3-Arrival.jpg')">
+      <img src="3-Arrival.jpg" alt="Three figures walking away from camera into the crowded street at night, B&W" loading="lazy">
+      <span class="photo-number">03</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Arrival</p>
+      <h2 class="photo-title">Following<br>Someone In</h2>
+      <p class="photo-caption">Three figures walking away from the camera into the crowd, the street opening up ahead into lights and motion. I wanted something that felt like arrival without being about faces or spectacle. Following someone into a place rather than watching from outside.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mohammed Ali Road</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Black &amp; White</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('4-Feast-break.jpg')">
+      <img src="4-Feast-break.jpg" alt="Waiter in red fez serving diners, RAMADAN sign glowing in background" loading="lazy">
+      <span class="photo-number">04</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Feast</p>
+      <h2 class="photo-title">Organized<br>Chaos</h2>
+      <p class="photo-caption">A table, a shared meal, the red-uniformed waiters moving between diners with that particular organized chaos you find in a place that's been doing this for a long time. The RAMADAN sign glowing in the background wasn't planned. It just happened to be there, and it anchors the whole thing.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mohammed Ali Road</span>
+        <span class="meta-pill">Iftar</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('5-Release.jpg')">
+      <img src="5-Release.jpg" alt="Mohammed Ali Road at full release - hundreds of people eating and moving through the lit street" loading="lazy">
+      <span class="photo-number">05</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Release</p>
+      <h2 class="photo-title">The Street<br>in Full</h2>
+      <p class="photo-caption">Hundreds of people eating, moving, talking &mdash; the entire length of Mohammed Ali Road lit up and in motion. It's not a quiet ending. That's intentional.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mohammed Ali Road</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider"><span>Artist Statement</span></div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="statement-header">
+    <h2>Statement</h2>
+    <p class="title">The Hour of Breaking</p>
+  </div>
+
+  <div class="statement-body">
+    <p>Mohammed Ali Road during Ramadan is one of those places you seek out because someone you trust told you it was worth it. I first saw it on Anthony Bourdain's No Reservations and made a point of being there after sunset one evening during the holy month. Nothing quite prepared me for what it actually felt like to be standing in the middle of it.</p>
+
+    <p>What struck me most wasn't the food or the scale or the noise, though all of those were extraordinary. It was the people. This wasn't a Muslim celebration that outsiders were tolerated at &mdash; it was something genuinely open. Muslim, Hindu, Christian, wealthy, poor &mdash; everyone was there, everyone was welcome, everyone was eating together. There's a warmth to that kind of shared humanity that's hard to describe without sounding sentimental, but it was real, and it's in the photographs if you look for it. I think about that sometimes when I see people in my own community treated as unwelcome for simply wishing others well.</p>
+
+    <p>It was also the first time on any of my trips to India that I ventured out completely on my own &mdash; navigating the Uber, the drop-off, finding the street, and eventually getting myself back. That probably sounds unremarkable to seasoned travelers, but India has a way of making you feel like you need a guide for everything, at least at first. Mohammed Ali Road that evening was my reward for finally trusting myself to just go.</p>
+
+    <p>The sequence opens before the breaking of the fast &mdash; a vendor at the grill, eyes closed, arm reaching over the fire with what looks like complete absorption. I don't know what he was thinking about in that moment. But there's something in it that reads as ritual rather than labor, and that felt like the right place to begin.</p>
+
+    <p>The second image pulls back to show where we are. The illuminated tower of the mosque rising above the crowded street, the smoke, the signs, the mass of people already moving through it &mdash; this is the context. It's not a quiet or reverent scene in any conventional sense. It's loud and dense and completely alive, which is kind of the point.</p>
+
+    <p>The third image is the one I converted to black and white &mdash; three figures walking away from the camera into the crowd, the street opening up ahead of them into lights and motion. I wanted something that felt like arrival without being about faces or spectacle. Following someone into a place rather than watching from outside.</p>
+
+    <p>From there the sequence moves inside &mdash; to a table, a shared meal, the red-uniformed waiters moving between diners with that particular organized chaos you find in a place that's been doing this for a long time. The RAMADAN sign glowing in the background wasn't planned. It just happened to be there, and it anchors the whole thing.</p>
+
+    <p>The last image is the street at full release &mdash; hundreds of people eating, moving, talking, the entire length of Mohammed Ali Road lit up and in motion. It's not a quiet ending. That's intentional.</p>
+
+    <div class="statement-section">
+      <h3>On Sequencing</h3>
+      <p>The sequence moves from preparation to gathering to arrival to feast to release. I used black and white for the arrival image to create a pause &mdash; a breath between the buildup and the meal. Color carries everything else because this is a place that lives in color.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On Aperture</h3>
+      <p>The preparation image uses a wider aperture to isolate the vendor against the grill and throw the background soft. The gathering and release images use deeper depth of field to keep the full street and crowd readable. The feast image sits somewhere in between &mdash; the waiter sharp, the scene behind him present but not competing.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On Shutter Speed</h3>
+      <p>The night conditions required balancing exposure against motion. The arrival image captures a slight sense of movement in the crowd behind the three figures, which felt appropriate for that transitional moment. The vendor at the grill is frozen &mdash; which reinforces the stillness of that opening image despite everything happening around him.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On Color and Black &amp; White</h3>
+      <p>Color was the right choice for almost everything here because Mohammed Ali Road at night is fundamentally about color &mdash; the red uniforms, the green mosque lights, the warm glow of the street food. The single black and white image works because of its contrast with everything around it, not in spite of it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Rob Pettit &nbsp;&nbsp;&middot;&nbsp;&nbsp; AVT 253 &nbsp;&middot;&nbsp; George Mason University &nbsp;&middot;&nbsp; 2026</p>
+  <p style="margin-top:0.5rem"><a href="https://robpettit.us">people.cs.gmu.edu/~rpettit</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  const items = document.querySelectorAll('[data-scroll]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => observer.observe(el));
+
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
