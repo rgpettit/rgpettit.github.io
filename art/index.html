@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Projects — Rob Pettit</title>
+<meta name="description" content="Photography and visual art projects by Rob Pettit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --deep: #111;
+    --surface: #161616;
+    --line: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.38);
+    --text: rgba(255,255,255,0.80);
+    --bright: rgba(255,255,255,0.95);
+    --accent: #c9a96e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--bright); text-decoration: underline; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    background: rgba(8,8,8,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  nav a {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent); text-decoration: none; }
+
+  .nav-push { height: 3.5rem; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 1;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--accent); }
+
+  .hero p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2px;
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    transition: border-color 0.25s, background 0.25s;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    border-color: rgba(201,169,110,0.4);
+    background: rgba(201,169,110,0.03);
+    text-decoration: none;
+  }
+
+  .card-thumb {
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    background: var(--deep);
+  }
+
+  .card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85);
+    transition: filter 0.4s, transform 0.6s;
+  }
+
+  .card:hover .card-thumb img {
+    filter: brightness(1);
+    transform: scale(1.03);
+  }
+
+  .card-body {
+    padding: 1.8rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+
+  .card-series {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    color: var(--bright);
+    line-height: 1.15;
+  }
+
+  .card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-top: 0.3rem;
+  }
+
+  .card-arrow {
+    margin-top: auto;
+    padding-top: 1.2rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── QUOTE ── */
+  .pull-quote {
+    text-align: center;
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--line);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .pull-quote blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .pull-quote cite {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; padding: 2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html">&#8592; Rob Pettit</a>
+  <a href="https://people.cs.gmu.edu/~rpettit" target="_blank" rel="noopener">GMU Faculty Page</a>
+</nav>
+<div class="nav-push"></div>
+
+<header class="hero">
+  <span class="eyebrow">Photography &amp; Visual Art</span>
+  <h1>Art <em>Projects</em></h1>
+  <p>Work made in the spaces between teaching, travel, and looking more carefully at the world.</p>
+</header>
+
+<main>
+  <div class="grid">
+
+    <a href="two-places-at-once/index.html" class="card">
+      <div class="card-thumb">
+        <img src="two-places-at-once/1-Immersion.jpg"
+             alt="Mumbai harbor at sunrise — Two Places at Once"
+             loading="lazy">
+      </div>
+      <div class="card-body">
+        <p class="card-series">AVT 253 &nbsp;&middot;&nbsp; 2026</p>
+        <h2 class="card-title">Two Places at Once</h2>
+        <p class="card-desc">Six photographs tracing the arc from immersion to departure to return, and the strange lag that travel leaves behind. Mumbai &middot; Harpers Ferry &middot; Loudoun County &middot; Fairfax.</p>
+        <p class="card-arrow">View project &rarr;</p>
+      </div>
+    </a>
+
+    <a href="hour-of-breaking/index.html" class="card">
+      <div class="card-thumb">
+        <img src="hour-of-breaking/2-Gathering.jpg"
+             alt="Mohammed Ali Road during Ramadan — The Hour of Breaking"
+             loading="lazy">
+      </div>
+      <div class="card-body">
+        <p class="card-series">AVT 253 &nbsp;&middot;&nbsp; 2026</p>
+        <h2 class="card-title">The Hour of Breaking</h2>
+        <p class="card-desc">Five photographs from a single evening on Mohammed Ali Road during Ramadan, tracing the rhythm of iftar from quiet preparation to full release. Mumbai.</p>
+        <p class="card-arrow">View project &rarr;</p>
+      </div>
+    </a>
+
+    <a href="never-again/index.html" class="card">
+      <div class="card-thumb">
+        <img src="never-again/DSC_2365-HDR.jpg"
+             alt="The Stairs of Death at Mauthausen — Never Again"
+             loading="lazy">
+      </div>
+      <div class="card-body">
+        <p class="card-series">Photographic Essay &nbsp;&middot;&nbsp; 2026</p>
+        <h2 class="card-title">Never Again</h2>
+        <p class="card-desc">Twenty-five photographs from the 81st liberation commemoration ceremonies at Gusen and Mauthausen, Austria. A record of memory, cruelty, family, and warning.</p>
+        <p class="card-arrow">View project &rarr;</p>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<div class="pull-quote">
+  <blockquote>&ldquo;To photograph is to appropriate the thing photographed. It means putting oneself into a certain relation to the world that feels like knowledge &mdash; and, therefore, like power.&rdquo;</blockquote>
+  <cite>&mdash; Susan Sontag</cite>
+</div>
+
+<footer>
+  <p>Rob Pettit &nbsp;&middot;&nbsp; George Mason University &nbsp;&middot;&nbsp; Computer Science</p>
+  <p style="margin-top:0.4rem"><a href="mailto:rpettit@gmu.edu">rpettit@gmu.edu</a></p>
+</footer>
+
+</body>
+</html>
