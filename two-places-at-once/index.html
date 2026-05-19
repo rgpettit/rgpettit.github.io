@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Places at Once &mdash; Rob Pettit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --deep: #111111;
+    --surface: #161616;
+    --line: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.35);
+    --text: rgba(255,255,255,0.82);
+    --bright: rgba(255,255,255,0.95);
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .intro-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.95;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .intro-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .intro-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--muted);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .intro-meta {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .intro-meta span {
+    color: var(--accent);
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 2s forwards;
+  }
+
+  .scroll-cue span {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── SEQUENCE ── */
+  .sequence {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .sequence-header {
+    text-align: center;
+    padding: 5rem 0 4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .sequence-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .sequence-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── PHOTO CARDS ── */
+  .photo-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 8rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .photo-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .photo-item.reverse {
+    direction: rtl;
+  }
+  .photo-item.reverse > * {
+    direction: ltr;
+  }
+
+  .photo-frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+    filter: brightness(0.92);
+  }
+
+  .photo-frame:hover img {
+    transform: scale(1.03);
+    filter: brightness(1);
+  }
+
+  .photo-number {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    background: rgba(8,8,8,0.7);
+    padding: 0.2rem 0.5rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .photo-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .photo-role {
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .photo-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.1;
+    color: var(--bright);
+    margin-bottom: 1.8rem;
+  }
+
+  .photo-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.75;
+    border-left: 1px solid var(--accent);
+    padding-left: 1.2rem;
+  }
+
+  .photo-meta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 0.3rem 0.8rem;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0 8rem;
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .section-divider span {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* ── STATEMENT ── */
+  .statement {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem 8rem;
+  }
+
+  .statement-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .statement-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .statement-header .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--bright);
+    line-height: 1.1;
+  }
+
+  .statement-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+
+  .statement-body p:first-child::first-letter {
+    font-size: 4em;
+    float: left;
+    line-height: 0.75;
+    margin: 0.05em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+  }
+
+  .statement-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .statement-section h3 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.15); }
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    backdrop-filter: blur(6px);
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    box-shadow: 0 0 80px rgba(0,0,0,0.8);
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+    color: var(--muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: 200;
+    transition: color 0.2s;
+    font-family: 'Raleway', sans-serif;
+    background: none;
+    border: none;
+  }
+
+  .lightbox-close:hover { color: var(--bright); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .photo-item,
+    .photo-item.reverse {
+      grid-template-columns: 1fr;
+      direction: ltr;
+    }
+
+    .photo-frame {
+      aspect-ratio: 4/3;
+    }
+
+    .photo-info {
+      padding: 2.5rem 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;gap:2rem;padding:1rem 2rem;background:rgba(8,8,8,0.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06);">
+  <a href="../../index.html" style="font-family:'Raleway',sans-serif;font-weight:200;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseover="this.style.color='rgba(201,169,110,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">&#8592; Rob Pettit</a>
+  <a href="../index.html" style="font-family:'Raleway',sans-serif;font-weight:200;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-decoration:none;" onmouseover="this.style.color='rgba(201,169,110,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Art Projects</a>
+</nav>
+
+<div style="height:3.5rem;"></div>
+
+<!-- INTRO -->
+<section class="intro">
+  <p class="intro-eyebrow">A photographic series &mdash; 2026</p>
+  <h1 class="intro-title">Two Places<br><em>at Once</em></h1>
+  <p class="intro-subtitle">Mumbai &nbsp;&middot;&nbsp; Harpers Ferry &nbsp;&middot;&nbsp; Loudoun County &nbsp;&middot;&nbsp; Fairfax</p>
+  <p class="intro-meta">Rob Pettit &nbsp;&nbsp;<span>/</span>&nbsp;&nbsp; AVT 253 &nbsp;&nbsp;<span>/</span>&nbsp;&nbsp; George Mason University</p>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SEQUENCE HEADER -->
+<div class="sequence-header">
+  <h2>The Sequence</h2>
+  <p>Six photographs tracing the arc from immersion to departure to return &mdash; and the strange lag in between.</p>
+</div>
+
+<!-- PHOTOS -->
+<section class="sequence">
+
+  <!-- 1 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('1-Immersion.jpg')">
+      <img src="1-Immersion.jpg" alt="Mumbai harbor at sunrise, bird crossing the sun" loading="lazy">
+      <span class="photo-number">01</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Immersion</p>
+      <h2 class="photo-title">The World<br>Left Behind</h2>
+      <p class="photo-caption">A single bird crosses in front of the sun over a harbor crowded with boats, the city of Mumbai just waking around it. This image is the emotional anchor of the series &mdash; a place of scale and beauty that refuses to let go easily.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mumbai, India</span>
+        <span class="meta-pill">Sunrise</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('2-LastLight-Leaving.jpg')">
+      <img src="2-LastLight-Leaving.jpg" alt="Mumbai sunset, windswept woman at the sea wall" loading="lazy">
+      <span class="photo-number">02</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Last Light &nbsp;&middot;&nbsp; Leaving</p>
+      <h2 class="photo-title">Something<br>Already Leaving</h2>
+      <p class="photo-caption">Marine Drive at sunset &mdash; Mumbai's long seafront promenade where the city comes to watch the day end over the Arabian Sea. Rendered in black and white. A woman stands at the sea wall, wind pulling at her clothes. Two people sit nearby absorbed in the moment &mdash; but she is standing, turned slightly inward. The color felt too comfortable; the departure needed a different register.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mumbai, India</span>
+        <span class="meta-pill">Sunset</span>
+        <span class="meta-pill">Black &amp; White</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('3-Threshold.jpg')">
+      <img src="3-Threshold.jpg" alt="Harpers Ferry railroad tracks receding toward a tunnel" loading="lazy">
+      <span class="photo-number">03</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Threshold</p>
+      <h2 class="photo-title">Neither Here<br>Nor There</h2>
+      <p class="photo-caption">Harpers Ferry, West Virginia. The railroad tracks recede toward a tunnel in the early morning light &mdash; a place defined by movement between states. The tunnel ahead is visible but you cannot see where it goes, and that uncertainty is the point.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Harpers Ferry, WV</span>
+        <span class="meta-pill">Early Morning</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('4-Return.jpg')">
+      <img src="4-Return.jpg" alt="Loudoun County farm pond at sunset with Blue Ridge mountains" loading="lazy">
+      <span class="photo-number">04</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Return</p>
+      <h2 class="photo-title">The Body<br>Arrives Home</h2>
+      <p class="photo-caption">Made with no planning at all. I was driving home after a night of teaching when the light over a farm pond stopped me. I happened to have my camera on the front seat that evening - it doesn't usually ride there - pulled off the road, stepped out, and made the shot. A quiet pond mirrors a dramatic sky; the Blue Ridge sits low on the horizon; a small red barn is barely visible in the middle distance. The body was already home. Apparently the eye was starting to catch up.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Loudoun County, VA</span>
+        <span class="meta-pill">Dusk</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('5-Reflection.jpg')">
+      <img src="5-Reflection.jpg" alt="Reflection in office window at GMU, translucent self overlaid on campus" loading="lazy">
+      <span class="photo-number">05</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Reflection</p>
+      <h2 class="photo-title">Present<br>and Absent</h2>
+      <p class="photo-caption">End of a teaching day, looking out from my office window at George Mason University. My own figure is faintly visible in the glass &mdash; translucent, overlaid on the spring trees and brick buildings and students walking below. What was I thinking about in that moment? Somewhere else, probably.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Fairfax, VA</span>
+        <span class="meta-pill">Late Afternoon</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('6-Residue.jpg')">
+      <img src="6-Residue.jpg" alt="Passport, boarding passes, singing bowl and Hamsa figurine on a table" loading="lazy">
+      <span class="photo-number">06</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Residue</p>
+      <h2 class="photo-title">What Travel<br>Leaves Behind</h2>
+      <p class="photo-caption">A passport open to its visa pages. Air India and Swiss boarding passes scattered across a table. A travel bag not yet put away. A small singing bowl and a Hamsa figurine brought back from India sitting among the tickets. Not memories exactly. Something more stubborn than that.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Home</span>
+        <span class="meta-pill">Natural Light</span>
+        <span class="meta-pill">Black &amp; White</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider"><span>Artist Statement</span></div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="statement-header">
+    <h2>Statement</h2>
+    <p class="title">Two Places at Once</p>
+  </div>
+
+  <div class="statement-body">
+    <p>Travel changes you in ways that don't resolve the moment the plane lands. You return home physically, but some part of you lingers &mdash; in the rhythm of a different city, in the light over a different harbor, in the faces of people you may never see again. This series is about that lag. It is not a comparison of two places. It is about the feeling of carrying one world inside you while standing in another.</p>
+
+    <p>The sequence opens in Mumbai at sunrise. A single bird crosses in front of the sun over a harbor crowded with boats, the city just waking around it. That image is the emotional anchor of the series &mdash; a place of scale and beauty that refuses to let go easily. The portrait orientation was intentional: I wanted the viewer drawn upward into the sky rather than outward across the water.</p>
+
+    <p>The second image moves to Marine Drive at sunset, rendered in black and white &mdash; Mumbai's long seafront promenade where the city comes to watch the day end over the Arabian Sea. A woman stands at the sea wall, wind pulling at her clothes, sunglasses raised to her lips, the sun dropping behind her. Two people sit nearby absorbed in the moment &mdash; but she is standing, turned slightly inward. Something is already leaving. I converted this image to black and white because the color felt too comfortable; the departure needed a different register.</p>
+
+    <p>From there the sequence crosses an ocean and lands at Harpers Ferry, where the railroad tracks and platform recede toward a tunnel in the early morning light. This is the threshold &mdash; a place defined by movement between states, by the fact that you are no longer there but not yet fully here. The tunnel ahead is visible but you cannot see where it goes, and that uncertainty is the point.</p>
+
+    <p>The fourth image lands in Loudoun County at dusk - made with no planning at all. I was driving home after a night of teaching when the light over a farm pond stopped me. I happened to have my camera on the front seat that evening - it doesn't usually ride there - pulled off the road, stepped out, and made the shot. A quiet pond mirrors a dramatic sky; the Blue Ridge sits low on the horizon; a small red barn is barely visible in the middle distance. The body was already home. Apparently the eye was starting to catch up.</p>
+
+    <p>The fifth image is a reflection &mdash; literally and otherwise. It was made at the end of a teaching day, looking out from my office window at GMU. My own figure is faintly visible in the glass, translucent, overlaid on the spring trees and brick buildings and students walking below. I am present and absent at the same time. What was I thinking about in that moment? Somewhere else, probably. I decided to leave the question open.</p>
+
+    <p>The series closes with the physical residue of travel &mdash; a passport open to its visa pages, Air India and Swiss boarding passes scattered across a table, a travel bag not yet put away, a small singing bowl and a Hamsa figurine brought back from India sitting among the tickets. Shot in black and white to echo the leaving images, this final frame asks what travel actually deposits when it is done. Not memories exactly. Something more stubborn than that.</p>
+
+    <div class="statement-section">
+      <h3>On Sequencing</h3>
+      <p>The sequence moves from immersion to departure to threshold to return to reflection to residue. Color holds the living world &mdash; the place left behind and the place returned to. Black and white marks the transitions: leaving, and what remains. There is also an unplanned water thread running through the first three images &mdash; the Gateway of India harbor, Marine Drive, the Potomac at Harpers Ferry &mdash; that I noticed only afterward, and kept.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On Aperture</h3>
+      <p>A wider aperture isolates the bird against the sunrise in the opening image and throws the harbor into soft depth behind it. Deeper depth of field in the Harpers Ferry and Loudoun images keeps the full environment readable &mdash; in those frames the landscape carries as much meaning as any single element. The residue image uses shallow depth of field to draw the eye across the objects on the table rather than fixing it on any one of them.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On Shutter Speed</h3>
+      <p>The Mumbai images were shot to freeze the figures and the bird against the light. The Harpers Ferry and Loudoun images use conventional shutter speeds &mdash; stillness was the intention. The reflection image captures the slow quality of end-of-day light through glass, which suits the contemplative mood of that moment in the sequence.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On Color and Black &amp; White</h3>
+      <p>Color carries the worlds &mdash; the one left behind and the one returned to. Black and white marks the emotional transitions. The choice felt right before I could fully articulate why, and I decided to trust that.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Rob Pettit &nbsp;&nbsp;&middot;&nbsp;&nbsp; AVT 253 &nbsp;&middot;&nbsp; George Mason University &nbsp;&middot;&nbsp; 2026</p>
+  <p style="margin-top:0.5rem"><a href="https://robpettit.us">people.cs.gmu.edu/~rpettit</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // Scroll reveal
+  const items = document.querySelectorAll('[data-scroll]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => observer.observe(el));
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
