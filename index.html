@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rob Pettit</title>
+<meta name="description" content="Rob Pettit — Professor of Practice and Associate Chair for Graduate Studies, Computer Science, George Mason University.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --deep: #111;
+    --surface: #161616;
+    --line: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.38);
+    --text: rgba(255,255,255,0.80);
+    --bright: rgba(255,255,255,0.95);
+    --accent: #c9a96e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--bright); text-decoration: underline; }
+
+  /* ── HERO ── */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 6rem 4rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-bio {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  /* ── LINKS GRID ── */
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .link-card {
+    border: 1px solid var(--line);
+    padding: 1.2rem 1.8rem;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 160px;
+  }
+
+  .link-card:hover {
+    border-color: var(--accent);
+    background: rgba(201,169,110,0.05);
+    text-decoration: none;
+  }
+
+  .link-card-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .link-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--bright);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  footer .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  footer .footer-links a {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  footer .footer-links a:hover { color: var(--accent); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 4rem 1.5rem 3rem; }
+    footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<main class="hero">
+  <p class="eyebrow">robpettit.us</p>
+  <h1>Rob<br><em>Pettit</em></h1>
+  <p class="hero-bio">Professor of Practice and Associate Chair for Graduate Studies, Computer Science, George Mason University. Software engineer, educator, photographer.</p>
+
+  <nav class="links" aria-label="Site sections">
+    <a href="https://people.cs.gmu.edu/~rpettit" class="link-card" target="_blank" rel="noopener">
+      <span class="link-card-label">Academic</span>
+      <span class="link-card-title">GMU Faculty Page</span>
+    </a>
+    <a href="art/index.html" class="link-card">
+      <span class="link-card-label">Photography</span>
+      <span class="link-card-title">Art Projects</span>
+    </a>
+    <a href="https://www.linkedin.com/in/rgpettit" class="link-card" target="_blank" rel="noopener">
+      <span class="link-card-label">Professional</span>
+      <span class="link-card-title">LinkedIn</span>
+    </a>
+    <a href="https://scholar.google.com/citations?hl=en&user=yuoi8UYAAAAJ" class="link-card" target="_blank" rel="noopener">
+      <span class="link-card-label">Research</span>
+      <span class="link-card-title">Google Scholar</span>
+    </a>
+  </nav>
+</main>
+
+<footer>
+  <p>George Mason University &nbsp;&middot;&nbsp; Computer Science</p>
+  <nav class="footer-links">
+    <a href="mailto:rpettit@gmu.edu">Email</a>
+    <a href="art/index.html">Art</a>
+  </nav>
+</footer>
+
+</body>
+</html>
