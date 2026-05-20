@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Never Again &mdash; Rob Pettit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --deep: #111111;
+    --surface: #161616;
+    --line: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.35);
+    --text: rgba(255,255,255,0.82);
+    --bright: rgba(255,255,255,0.95);
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.15);
+    --red: rgba(180, 60, 60, 0.75);
+    --red-dim: rgba(180, 60, 60, 0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(180,60,60,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .intro-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.95;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .intro-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .intro-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--muted);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .intro-meta {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .intro-meta span { color: var(--accent); }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 2s forwards;
+  }
+
+  .scroll-cue span {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── PREAMBLE ── */
+  .preamble {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .preamble-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2.5rem;
+    display: block;
+  }
+
+  .preamble p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+
+  .preamble p:first-of-type::first-letter {
+    font-size: 4em;
+    float: left;
+    line-height: 0.75;
+    margin: 0.05em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+  }
+
+  /* ── PARALLEL QUOTES ── */
+  .parallel-block {
+    max-width: 900px;
+    margin: 0 auto 5rem;
+    padding: 0 2rem;
+  }
+
+  .parallel-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .parallel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .parallel-quote {
+    padding: 2.5rem 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    position: relative;
+  }
+
+  .parallel-quote.hitler {
+    border-left: 3px solid rgba(180,60,60,0.5);
+  }
+
+  .parallel-quote.trump {
+    border-left: 3px solid rgba(201,169,110,0.4);
+  }
+
+  .parallel-quote .who {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.58rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+
+  .parallel-quote .who span {
+    color: var(--accent);
+  }
+
+  .parallel-quote blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    color: var(--bright);
+    line-height: 1.7;
+  }
+
+  .parallel-connector {
+    text-align: center;
+    padding: 2rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  /* ── SEQUENCE ── */
+  .sequence {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .sequence-header {
+    text-align: center;
+    padding: 5rem 0 4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .sequence-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .sequence-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── CHAPTER BREAKS ── */
+  .chapter-break {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 4rem 0 3rem;
+  }
+
+  .chapter-break::before, .chapter-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .chapter-break-inner {
+    text-align: center;
+  }
+
+  .chapter-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .chapter-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* ── PHOTO CARDS ── */
+  .photo-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 8rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .photo-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .photo-item.reverse {
+    direction: rtl;
+  }
+  .photo-item.reverse > * {
+    direction: ltr;
+  }
+
+  .photo-frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+    cursor: zoom-in;
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+    filter: brightness(0.92);
+  }
+
+  .photo-frame:hover img {
+    transform: scale(1.03);
+    filter: brightness(1);
+  }
+
+  .photo-number {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    background: rgba(8,8,8,0.7);
+    padding: 0.2rem 0.5rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .photo-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .photo-role {
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .photo-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.1;
+    color: var(--bright);
+    margin-bottom: 1.8rem;
+  }
+
+  .photo-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.75;
+    border-left: 1px solid var(--accent);
+    padding-left: 1.2rem;
+  }
+
+  .photo-meta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 0.3rem 0.8rem;
+  }
+
+  /* ── WIDE PHOTO ── */
+  .photo-item-wide {
+    margin-bottom: 8rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .photo-item-wide.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .photo-frame-wide {
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+    aspect-ratio: 21/9;
+    cursor: zoom-in;
+    margin-bottom: 0;
+  }
+
+  .photo-frame-wide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.9);
+    transition: filter 0.6s ease;
+  }
+
+  .photo-frame-wide:hover img { filter: brightness(1); }
+
+  .photo-caption-wide {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: none;
+    padding: 2rem 3rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .photo-caption-wide .photo-number {
+    position: static;
+    background: none;
+    backdrop-filter: none;
+    padding: 0;
+    font-size: 1.8rem;
+    opacity: 0.2;
+  }
+
+  .photo-caption-wide-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .photo-caption-wide-text .photo-role { margin-bottom: 0; }
+
+  .photo-caption-wide-text .photo-caption {
+    font-size: 0.95rem;
+    border-left: none;
+    padding-left: 0;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0 8rem;
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .section-divider span {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* ── STATEMENT ── */
+  .statement {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem 8rem;
+  }
+
+  .statement-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .statement-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .statement-header .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--bright);
+    line-height: 1.1;
+  }
+
+  .statement-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+
+  .statement-body p:first-child::first-letter {
+    font-size: 4em;
+    float: left;
+    line-height: 0.75;
+    margin: 0.05em 0.1em 0 0;
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--bright);
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  background: rgba(8,8,8,0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+">
+  <a href="https://people.cs.gmu.edu/~rpettit/index.html" style="
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  " onmouseover="this.style.color='rgba(201,169,110,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">&#8592; Rob Pettit</a>
+  <a href="https://people.cs.gmu.edu/~rpettit/art/index.html" style="
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  " onmouseover="this.style.color='rgba(201,169,110,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">Art Projects</a>
+</nav>
+
+<div style="height: 3.5rem;"></div>
+
+<!-- INTRO -->
+<section class="intro">
+  <p class="intro-eyebrow">A photographic essay &mdash; May 2026</p>
+  <h1 class="intro-title">Never<br><em>Again</em></h1>
+  <p class="intro-subtitle">Mauthausen &nbsp;&middot;&nbsp; Gusen &nbsp;&middot;&nbsp; Austria &nbsp;&middot;&nbsp; 81 Years</p>
+  <p class="intro-meta">Rob Pettit</p>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PREAMBLE -->
+<div class="preamble">
+  <span class="preamble-label">On Memory and Warning</span>
+
+  <p>The concentration camps did not appear fully formed. They were not the first act. A panel inside the Mauthausen Memorial museum, drawn from the <a href="https://en.wikipedia.org/wiki/Documentation_Centre_of_Austrian_Resistance">Dokumentationsarchiv des &ouml;sterreichischen Widerstandes</a>, summarizes the progression with clinical precision. With the National Socialists' seizure of power, persecution became government policy. The <a href="https://encyclopedia.ushmm.org/content/en/article/volksgemeinschaft-peoples-or-national-community"><em>Volksgemeinschaft</em></a> (the &ldquo;People's Community&rdquo;) defined belonging by racial and ideological purity, and designated everyone outside that definition as an enemy to be eliminated: Jews foremost, but also Romani, homosexuals, Jehovah's Witnesses, political dissidents, priests, the disabled, and anyone deemed "asocial" by the state. The Nuremberg Laws of 1935 codified who counted as a Jew. People were banned from professions, robbed of property, stripped of all civil rights. By 1938, with the <a href="https://encyclopedia.ushmm.org/content/en/article/kristallnacht">Kristallnacht</a>, synagogues were burned and over 25,000 people deported to camps. The museum is explicit: this is a sequence. Each step made the next one easier. Each law made the next law thinkable. The list grew. The camps grew with it. After the war, LGBTQ+ prisoners were not classified as victims by the Austrian government and received no reparations. Some categories of suffering were more acceptable to acknowledge than others. That, too, is a lesson.</p>
+
+  <p>Before the camps came the rhetoric: speeches naming enemies within the nation, describing certain people as infestation and contamination, promising national greatness through racial purification. That rhetoric found ordinary people in ordinary towns, people who lived in villages like the one below the hill at Mauthausen, where a church spire rises above green fields and children played soccer near the Danube. The horror was built, piece by piece, in plain sight, by a movement that had learned to make dehumanization feel like patriotism.</p>
+
+  <p>The patterns that produced Mauthausen are not unique to 1930s Germany. History may not repeat exactly, but it rhymes in ways that should stop us cold and question current paths. In November 2023, on Veterans Day of all days, Donald Trump told an American rally crowd he would &ldquo;root out the communists, Marxists, fascists and the radical left thugs that live like vermin within the confines of our country.&rdquo;<sup>1</sup> Earlier that year, he warned that immigrants were &ldquo;poisoning the blood of our country.&rdquo;<sup>2</sup> These were not offhand remarks. In <em>Mein Kampf</em>, Volume II, Chapter IV, Adolf Hitler wrote: &ldquo;All great cultures of the past perished only because the originally creative race died out from blood poisoning.&rdquo;<sup>3</sup> Elsewhere he described Jews as having &ldquo;poisoned the blood of others&rdquo; (p.&thinsp;272) and called for a state dedicated to &ldquo;the care of its best racial elements&rdquo; in &ldquo;this age of racial poisoning&rdquo; (p.&thinsp;628). The structural parallel is exact: identify a group as a biological contamination of the national body; promise to purify it; give the crowd permission to stop thinking of those people as fully human.</p>
+
+  <p>The point is not that America is Nazi Germany. The point is that this is how it starts. Not with gas chambers but with speeches. Not with camps but with the slow normalization of calling human beings vermin and poison and enemies within. By the time the camps exist, the permission for them has already been granted, word by word, rally by rally, for years. Columbia University historian Timothy Naftali put it directly after Trump&rsquo;s &ldquo;vermin&rdquo; speech: &ldquo;When you dehumanize an opponent, you strip them of their constitutional rights to participate securely in a democracy &mdash; because you&rsquo;re saying they&rsquo;re not human.&rdquo;<sup>4</sup></p>
+
+  <p>In May 2026, I traveled to Austria to attend the 81st liberation commemoration ceremonies at both the Gusen subcamp (May 9) and the main Mauthausen camp (May 10), representing my family and the memory of my grandfather, Dr. (Captain) Jack Blackstone, who served as a medical officer with the <a href="https://encyclopedia.ushmm.org/content/en/article/the-26th-infantry-division">26th Infantry (Yankee) Division</a> attached to Patton&rsquo;s Third Army. He had fought his way across France and into Germany and Austria. He had survived the Battle of the Bulge. When asked, all he would say was that, &ldquo;the Ardennes was fucking cold.&rdquo; He was among the first American doctors to reach Gusen and Mauthausen upon liberation in May 1945, and he was awarded the Bronze Star with two Oak Leaf Clusters for his service there. He was offered a promotion to Major if he would reenlist, but he had seen enough. Of Gusen and Mauthausen, he would only tell me that they could smell the camp well before they ever saw it. He would never speak about what he actually saw.</p>
+
+  <p>At the U.S. memorial ceremony on May 10, Col. Jonathan Drake, Defense Attach&eacute; at the U.S. Embassy Vienna, spoke about the men who liberated these camps. &ldquo;The Soldiers of these divisions were battle-hardened,&rdquo; he said. &ldquo;They had been through an incredible amount of things. They had seen all sorts of untold hardship. Nothing they saw prepared them for what they would see here. They thought the worst of the war was behind them, but the scenes of cruelty, starvation and systematic torture and death would horrify them and stay with them the rest of their lives.&rdquo;<sup>5</sup> Col. Drake wears a mountain tab, airborne pin, and jump wings on his uniform. He is not a man given to easy reverence. My grandfather never described what he saw. Neither, apparently, did most of the men who were there with him.</p>
+
+  <p>What follows is a documentary record of what those places look like today, eighty-one years later, and what it meant to stand there.</p>
+
+  <p style="font-size:0.7rem; line-height:1.6; color:var(--muted); margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--line);">
+    <sup>1</sup> Trump, Veterans Day rally, Claremont, NH, Nov. 11, 2023. Reported by the <em>Washington Post</em>, ABC News, and others; repeated verbatim in a Truth Social post the same day.<br>
+    <sup>2</sup> Trump, rally in Durham, NH, Dec. 16, 2023 (&ldquo;They&rsquo;re poisoning the blood of our country&rdquo;); repeated in Waterloo, IA, Dec. 19, 2023 (<em>NBC News</em>, CBS News). Trump first used the phrase in a September 2023 interview with The National Pulse.<br>
+    <sup>3</sup> Hitler, <em>Mein Kampf</em>, Vol. II, Ch. IV (Houghton Mifflin annotated ed., 1943). The &ldquo;blood poisoning&rdquo; and &ldquo;racial poisoning&rdquo; themes recur at pp.&thinsp;272, 283, and 628.<br>
+    <sup>4</sup> Naftali, quoted in the <em>Washington Post</em>, Nov. 12, 2023.<br>
+    <sup>5</sup> Col. Drake speech at the 81st Mauthausen Commemoration; U.S. Army Europe and Africa, &ldquo;7ATC Represents WWII Liberators in Mauthausen,&rdquo; May 12, 2026.
+  </p>
+</div>
+
+<!-- PARALLEL QUOTES -->
+<div class="parallel-block">
+  <p class="parallel-label">The Language &nbsp;&nbsp;&middot;&nbsp;&nbsp; Then and Now</p>
+  <div class="parallel-grid">
+    <div class="parallel-quote hitler">
+      <p class="who">Adolf Hitler &nbsp;&mdash;&nbsp; <span><em>Mein Kampf</em>, Vol. II, Ch. IV (1925); p.&thinsp;272</span></p>
+      <blockquote>&ldquo;All great cultures of the past perished only because the originally creative race died out from blood poisoning.&rdquo; &hellip; &ldquo;He [the Jew] poisons the blood of others, but preserves his own.&rdquo;</blockquote>
+    </div>
+    <div class="parallel-quote trump">
+      <p class="who">Donald Trump &nbsp;&mdash;&nbsp; <span>Durham, NH, Dec. 16, 2023 (<em>NBC News</em>)</span></p>
+      <blockquote>&ldquo;They&rsquo;re poisoning the blood of our country. That&rsquo;s what they&rsquo;ve done. They&rsquo;ve poisoned mental institutions and prisons all over the world &hellip; They&rsquo;re coming into our country from Africa, from Asia &mdash; all over the world.&rdquo;</blockquote>
+    </div>
+    <div class="parallel-quote hitler">
+      <p class="who">Adolf Hitler &nbsp;&mdash;&nbsp; <span><em>Mein Kampf</em>, Vol. II (1925); p.&thinsp;628</span></p>
+      <blockquote>&ldquo;A state which in this age of racial poisoning dedicates itself to the care of its best racial elements must some day become Lord of the earth.&rdquo;</blockquote>
+    </div>
+    <div class="parallel-quote trump">
+      <p class="who">Donald Trump &nbsp;&mdash;&nbsp; <span>Veterans Day rally, Claremont, NH, Nov. 11, 2023 (<em>Washington Post</em>); Truth Social post same day</span></p>
+      <blockquote>&ldquo;We will root out the communists, Marxists, fascists and the radical left thugs that live like vermin within the confines of our country &hellip; The threat from outside forces is far less sinister, dangerous and grave than the threat from within.&rdquo;</blockquote>
+    </div>
+  </div>
+  <p class="parallel-connector">Multiple historians of Nazi Germany identified these parallels immediately and publicly. The words are not identical. The dehumanizing logic, naming a group as contamination, as infestation, as an internal enemy to be purged, is.</p>
+</div>
+
+<!-- SEQUENCE HEADER -->
+<div class="sequence-header">
+  <h2>The Photographs</h2>
+  <p>Twenty-six images across five movements: the land, the place, the memory, the family, and the promise. The Gusen ceremony came first, on May 9. Mauthausen followed on May 10. That is also the order my grandfather traveled, 81 years earlier.</p>
+</div>
+
+<!-- PHOTOS -->
+<section class="sequence">
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter-break">
+    <div class="chapter-break-inner">
+      <span class="chapter-number">I</span>
+      <span class="chapter-title">The Land Before</span>
+    </div>
+  </div>
+
+  <!-- 1 church -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2285-HDR.jpg')">
+      <img src="DSC_2285-HDR.jpg" alt="St. Nicholas parish church in Mauthausen at golden hour sunset" loading="lazy">
+      <span class="photo-number">01</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Mauthausen Village &nbsp;&middot;&nbsp; May 8, 2026</p>
+      <h2 class="photo-title">An Ordinary<br>Town</h2>
+      <p class="photo-caption">The parish church of St. Nicholas in Mauthausen at golden hour, the evening before the Gusen liberation ceremony. This is a small working town on the Danube near Linz, Austria: mostly farms, the river, and a church. The concentration camp sits in the hills above it. The people here knew. This ordinariness is the first fact to reckon with.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mauthausen, Austria</span>
+        <span class="meta-pill">Golden Hour</span>
+        <span class="meta-pill">St. Nicholas Parish</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 Danube sunset -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2308.jpg')">
+      <img src="DSC_2308.jpg" alt="Sunset over the Danube at Mauthausen" loading="lazy">
+      <span class="photo-number">02</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Danube at Mauthausen &nbsp;&middot;&nbsp; May 8, 2026</p>
+      <h2 class="photo-title">The River<br>at Sunset</h2>
+      <p class="photo-caption">Sunset over the Danube at Mauthausen, the evening before the Gusen ceremony. The river is beautiful here. It has always been beautiful here. Prisoners arrived by barge and train to this same waterfront and were marched uphill through the town to the camp. The ashes of those who died at Gusen were dumped into this river. There are no grave markers at Gusen. The Danube was the grave.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Danube</span>
+        <span class="meta-pill">Mauthausen</span>
+        <span class="meta-pill">Sunset</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 fields -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2250-HDR.jpg')">
+      <img src="DSC_2250-HDR.jpg" alt="Golden light over green fields above Mauthausen village at sunset" loading="lazy">
+      <span class="photo-number">03</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Fields Above Town &nbsp;&middot;&nbsp; May 8, 2026</p>
+      <h2 class="photo-title">Where He<br>Stood</h2>
+      <p class="photo-caption">Golden hour over the rolling hills above Mauthausen village. These are the same fields where I believe my grandfather stood for a photograph on V-E Day, May 8, 1945. The land looks almost the same. The trees have grown. The rolling field is still there. A large cemetery lies just behind where I stood to make this image. The war is very close here, against the beauty, stillness, and quiet.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Above Mauthausen</span>
+        <span class="meta-pill">Sunset</span>
+        <span class="meta-pill">VE Day Field</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 held photo -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('20260508_165622.jpg')">
+      <img src="20260508_165622.jpg" alt="Hand holding a sepia VE Day photograph in front of the same field 81 years later" loading="lazy">
+      <span class="photo-number">04</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">81 Years Apart &nbsp;&middot;&nbsp; May 8, 2026</p>
+      <h2 class="photo-title">His Photo,<br>His Field</h2>
+      <p class="photo-caption">My grandfather&rsquo;s V-E Day photograph held up in front of what I believe is the same location, eight decades later. He would have been 28 years old. The fields are still green. The war is still there if you know where to look. He was a battle-hardened medical officer who survived the Battle of the Bulge. Yet he would never speak of what he actually saw at Gusen and Mauthausen.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mauthausen Hills</span>
+        <span class="meta-pill">Then &amp; Now</span>
+        <span class="meta-pill">VE Day</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter-break">
+    <div class="chapter-break-inner">
+      <span class="chapter-number">II</span>
+      <span class="chapter-title">The Architecture of Atrocity</span>
+    </div>
+  </div>
+
+  <!-- 5 gate -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2327.jpg')">
+      <img src="DSC_2327.jpg" style="object-position: top left;" alt="Mauthausen main entrance gate and guard tower in morning light" loading="lazy">
+      <span class="photo-number">05</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Mauthausen &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">The Gate<br>Still Stands</h2>
+      <p class="photo-caption">The main entrance and guard tower of Mauthausen in morning light. Look at the top of the gate: the rebar protruding from the stonework is all that remains of the <em>Reichsadler</em>, the Nazi imperial eagle that once presided over every prisoner who passed beneath it. On the day of liberation, survivors tore it down with their hands. Photographs from that moment, held in the National Archives and the U.S. Holocaust Memorial Museum photo archives, show them doing it eagerly. The stone was quarried by those same prisoners. The camp was designed to be permanent. The eagle is gone. The stone walls and towers remain.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">KZ Mauthausen</span>
+        <span class="meta-pill">Main Gate</span>
+        <span class="meta-pill">Reichsadler</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 soccer pitch -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2329.jpg')">
+      <img src="DSC_2329.jpg" style="object-fit: contain; background: #111;" alt="The soccer pitch outside the Mauthausen camp gates with overflow barracks visible" loading="lazy">
+      <span class="photo-number">06</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Mauthausen &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">The Soccer<br>Pitch</h2>
+      <p class="photo-caption">Just outside the main gate. The SS had a soccer team. Local Austrian clubs played against them in a regional league, and in the 1944/45 season, SS Mauthausen were autumn champions of the <em>Landesklasse Oberdonau</em>, the highest league in Upper Austria. The terraced hillside to the left served as bleachers for the spectators, including children. To the right of the willow were wooden overflow barracks for prisoners, separated from the playing area by barbed wire. Anyone on the field and anyone in the stands could see them. Everyone knew. Yet the games continued.</p>
+      <p class="photo-caption" style="margin-top:1rem;">When the liberation forces arrived, they found the crematorium still holding unburned remains and bodies piled beyond identification. For those they could not identify, this soccer pitch became a mass grave. American forces required the remaining SS guards and local villagers to dig the graves. The same ground where Austrian civilians had watched a league match now held the evidence of what their silence had made possible. The bodies have since been moved as part of ongoing efforts to identify the dead.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Outside the Camp</span>
+        <span class="meta-pill">Landesklasse Oberdonau</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 Gusenbauer house -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2337.jpg')">
+      <img src="DSC_2337.jpg" alt="View from quarry edge toward Gusenbauer farmhouse with Stairs of Death visible at right" loading="lazy">
+      <span class="photo-number">07</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Wiener Graben Quarry &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">The View From<br>Her Window</h2>
+      <p class="photo-caption">The view from the edge of the Wienergraben quarry toward the surrounding farms, the Stairs of Death visible along the right edge. The white farmhouse on the hill in the background is the Gusenbauer property, Marbach Nr. 7. From this hillside, Eleonore Gusenbauer watched prisoners being shot in the quarry below and left to die, sometimes for days. In 1941, she filed a formal complaint with the local police. She did not ask them to stop. She asked that it be done somewhere she could not see it. The letter is preserved in the Mauthausen Memorial archive. Local schoolchildren were escorted through the road running through the camp grounds and told they saw nothing and heard nothing. The quarry below this house is where that instruction was first tested.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Gusenbauer Farm</span>
+        <span class="meta-pill">Wienergraben</span>
+        <span class="meta-pill">Bystanders</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 Bundesarchiv stairs -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('stairs-footage.jpg')">
+      <img src="stairs-footage.jpg" alt="Prisoners carrying granite blocks up the Stairs of Death, approximately 1942" loading="lazy" style="filter: brightness(0.9);">
+      <span class="photo-number">08</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Wiener Graben Quarry &nbsp;&middot;&nbsp; Approximately 1942</p>
+      <h2 class="photo-title">The Stairs<br>in Use</h2>
+      <p class="photo-caption">Prisoners carrying granite blocks up the Stairs of Death, photographed from nearly the same angle as the image in the next panel. The blocks weighed up to 50 kilograms. The column stretches from the quarry floor to the top without a break. A guard stands at right. The guards who watched this scene, and the neighbors whose houses overlooked it, watched it every working day for seven years.</p>
+      <p class="photo-caption" style="margin-top:1rem; font-size:0.85rem; opacity:0.6;">Bundesarchiv, Bild 192-269 / photographer unknown / CC-BY-SA 3.0</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Bundesarchiv</span>
+        <span class="meta-pill">1942</span>
+        <span class="meta-pill">Historical</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 stairs today -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2371.jpg')">
+      <img src="DSC_2371.jpg" alt="The Stairs of Death today, overgrown with grass and surrounded by trees" loading="lazy">
+      <span class="photo-number">09</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Quarry &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">The Stairs<br>of Death</h2>
+      <p class="photo-caption">One hundred and eighty-six steps, today overgrown and quiet. Prisoners were forced to carry granite blocks weighing up to 50 kilograms up these stairs, often at a run under constant blows from guards. Those who faltered could trigger a domino collapse of bodies and stone all the way down. For others, the SS lined prisoners at the cliff edge above, the <em>Fallschirmspringerwand</em>, or &ldquo;Parachutists&rsquo; Wall,&rdquo; and gave them a choice: be shot, or push the man in front of you over. Many chose to jump themselves. In winter, guards stripped prisoners and sprayed them with water, leaving them to freeze. Mauthausen was not classified as a death camp in the formal sense. The Nazis called it a <em>Knochenm&uuml;hle</em>: the Bone Grinder. In other camps, its name alone incited terror.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Todesstiege</span>
+        <span class="meta-pill">186 Steps</span>
+        <span class="meta-pill">Fallschirmspringerwand</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 quarry floor -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2429-HDR.jpg')">
+      <img src="DSC_2429-HDR.jpg" alt="The quarry floor with a still pond reflecting the rock walls and sky" loading="lazy">
+      <span class="photo-number">10</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Wiener Graben Quarry &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">The Quarry<br>Floor</h2>
+      <p class="photo-caption">The floor of the granite quarry today is peaceful. Flowers bloom. A still green pond reflects the greenery on the cliff walls. Trees have grown along the edges. The beauty is disorienting. It takes effort to wrap your head around both things at once: what this place looks like now and what it was designed to do. Over 90,000 people died in the Mauthausen-Gusen complex over seven years. After the war, neighbors used this quarry as a picnic and bathing ground.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Quarry Floor</span>
+        <span class="meta-pill">Reflections</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter-break">
+    <div class="chapter-break-inner">
+      <span class="chapter-number">III</span>
+      <span class="chapter-title">Gusen: The Forgotten Sister</span>
+    </div>
+  </div>
+
+  <!-- 11 Gusen entrance -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2619.jpg')">
+      <img src="DSC_2619.jpg" alt="Memorial wall leading to the Gusen crematorium building" loading="lazy">
+      <span class="photo-number">11</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Gusen &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">Gusen&rsquo;s<br>Entrance</h2>
+      <p class="photo-caption">The memorial wall leading into the former Gusen branch camp and crematorium. For decades after the war, barracks were converted to apartments and houses were built over the site. An estate home now sits atop what was once one of the most lethal subcamps in the Nazi system. The main entrance gate was converted to a private residence. Two barracks became private homes. The SS barracks served as apartments until the early 2000s. Only the crematorium was preserved, and even that was nearly lost. The local quarry, sold back to its original owners by Austria after the war at a steep discount, continues to operate today.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Gusen Memorial</span>
+        <span class="meta-pill">Langenstein</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 liberators found -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2630.jpg')">
+      <img src="DSC_2630.jpg" alt="Photographs inside the Gusen memorial showing the camp as the liberators found it in 1945" loading="lazy">
+      <span class="photo-number">12</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Inside the Gusen Memorial &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">What the<br>Liberators Found</h2>
+      <p class="photo-caption">Photographs inside the Gusen memorial museum, showing the camp as American soldiers found it in May 1945. The images are from the liberators themselves. U.S. troops liberated nearly 40,000 people across the Mauthausen-Gusen complex in the days following May 5, 1945. Many were too far gone to survive even with immediate care. Some soldiers handed over their own rations on the spot. The prisoners died in front of them: bodies that had been starved for years could not process food. That moment, of reaching for kindness and watching it fail, is something no debrief covers. My grandfather was the first American doctor to reach the site. He never described what he saw.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Gusen Museum</span>
+        <span class="meta-pill">Liberation 1945</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 ceremony crowd wide -->
+  <div class="photo-item-wide" data-scroll>
+    <div class="photo-frame-wide" onclick="openLightbox('20260509_171044.jpg')">
+      <img src="20260509_171044.jpg" alt="Ceremony crowd gathered on the former Gusen roll-call ground, Stanislaw Zalewski visible at left in wheelchair" loading="lazy">
+      <span class="photo-number">13</span>
+    </div>
+    <div class="photo-caption-wide">
+      <div class="photo-caption-wide-text">
+        <p class="photo-role">Gusen Ceremony &nbsp;&middot;&nbsp; Former Appellplatz &nbsp;&middot;&nbsp; May 9, 2026 &nbsp;&middot;&nbsp; 5:00 PM</p>
+        <p class="photo-caption">Around 1,000 people gathered on the former roll-call ground of the Gusen branch camp for the 81st liberation ceremony. Stanis&#322;aw Zalewski, the last known surviving prisoner of the Gusen camp, is seated at left in the wheelchair. The gravel underfoot is the former <em>Appellplatz</em>, where prisoners were made to stand at attention for roll call sometimes for hours, sometimes through the night, sometimes until they died of exposure. The ceremony opened with the reading of national and international remembrances and closed with the crowd singing together an adapted version of &ldquo;Bella Ciao,&rdquo; the Italian partisan anthem. The final line, sung in unison: &ldquo;Long live freedom.&rdquo;</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14 flowers and candle -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('20260509_181301.jpg')">
+      <img src="20260509_181301.jpg" alt="Flowers placed around a candle and granite stones at the Gusen ceremony" loading="lazy">
+      <span class="photo-number">14</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Gusen &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">Flowers and<br>Granite</h2>
+      <p class="photo-caption">At the close of the ceremony, participants placed flowers around a candle made by local schoolchildren, encircled by pieces of granite from the quarry where prisoners were worked to death. The stones are from the same quarry. The same material that built the camp and crushed the people imprisoned here now holds the flowers. It was the quietest, most human moment of two days of ceremony, and probably the one I will remember longest.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Gusen Appellplatz</span>
+        <span class="meta-pill">Remembrance</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15 wreath at crematorium wide -->
+  <div class="photo-item-wide" data-scroll>
+    <div class="photo-frame-wide" onclick="openLightbox('20260509_183712.jpg')">
+      <img src="20260509_183712.jpg" alt="US wreath being laid in the Gusen crematorium by Tech Sgt. Julio Rosa and Special Envoy Ellen Germain" loading="lazy">
+      <span class="photo-number">15</span>
+    </div>
+    <div class="photo-caption-wide">
+      <div class="photo-caption-wide-text">
+        <p class="photo-role">Gusen Crematorium &nbsp;&middot;&nbsp; May 9, 2026 &nbsp;&middot;&nbsp; Final Procession</p>
+        <p class="photo-caption">The United States wreath being laid inside the Gusen crematorium by Tech Sgt. Julio Rosa and U.S. Special Envoy for Holocaust Issues Ellen Germain. After the ceremony on the former roll-call ground, the crowd processed together to the Memorial de Gusen for the wreath laying. There are no grave markers at Gusen. The crematorium serves as both mausoleum and memorial. This is the place where the ashes were made before they were dumped in the Danube. The ceremony has been held annually for decades, kept alive by survivor groups and families long before any government got involved.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16 Zalewski -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('20260509_181426.jpg')">
+      <img src="20260509_181426.jpg" alt="Stanislaw Zalewski, last surviving Gusen prisoner, with family at the ceremony" loading="lazy">
+      <span class="photo-number">16</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Last Survivor &nbsp;&middot;&nbsp; May 9, 2026</p>
+      <h2 class="photo-title">Stanis&#322;aw<br>Zalewski</h2>
+      <p class="photo-caption">Stanis&#322;aw Zalewski, the last known surviving prisoner of the Gusen camp, attended with his family. He was a young man when he was imprisoned here. He is in a wheelchair now. There may be no living survivors at the 82nd ceremony. The chain from eyewitness to living memory is about to break. After that, it is only photographs and stone and the people who choose to show up.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Last Living Survivor</span>
+        <span class="meta-pill">Gusen</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter-break">
+    <div class="chapter-break-inner">
+      <span class="chapter-number">IV</span>
+      <span class="chapter-title">A Family&rsquo;s Thread</span>
+    </div>
+  </div>
+
+  <!-- 17 26th Infantry plaque -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2540-HDR.jpg')">
+      <img src="DSC_2540-HDR.jpg" alt="US 26th Infantry Division liberator memorial at Mauthausen with grandfather's photo placed at the base" loading="lazy">
+      <span class="photo-number">17</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Mauthausen &nbsp;&middot;&nbsp; The 26th Infantry Memorial</p>
+      <h2 class="photo-title">Remembering<br>the Liberators</h2>
+      <p class="photo-caption">The U.S. liberator memorial at Mauthausen, with the inscription for the 26th Infantry Division (Yankee Division), Third U.S. Army: my grandfather&rsquo;s unit. I placed his V-E Day photograph at the base of the plaque. Captain Jack C. Blackstone, M.D. was 27 years old when he arrived here. He went on to deliver thousands of babies as an OB/GYN in Owensboro, Kentucky, for the next 40 years. He died in 2005 having never described what he found at Mauthausen to anyone in his family.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">26th Infantry Division</span>
+        <span class="meta-pill">Liberators</span>
+        <span class="meta-pill">Third Army</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 18 Hope Lives plaque -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2573.jpg')">
+      <img src="DSC_2573.jpg" alt="Hope Lives When People Remember plaque inside Mauthausen" loading="lazy">
+      <span class="photo-number">18</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Mauthausen &nbsp;&middot;&nbsp; Inside the Camp</p>
+      <h2 class="photo-title">&ldquo;Hope Lives<br>When People Remember&rdquo;</h2>
+      <p class="photo-caption">A commemorative plaque inside Mauthausen. The phrase asks more of the living than it first appears to. It is not a comfort but an obligation. Memory is not passive. It requires showing up and speaking up.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mauthausen Memorial</span>
+        <span class="meta-pill">Never Forget</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 19 56-star flag -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('IMG_6541.jpg')">
+      <img src="IMG_6541.jpg" alt="Rob Pettit carrying the prisoners' handmade American flag with 56 stars through Mauthausen" loading="lazy">
+      <span class="photo-number">19</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Mauthausen &nbsp;&middot;&nbsp; May 10, 2026</p>
+      <h2 class="photo-title">The Flag<br>with 56 Stars</h2>
+      <p class="photo-caption">In the final days before liberation, a group of Mauthausen prisoners secretly sewed an American flag. They had no model to work from and didn&rsquo;t know exactly how many stars it should have, so they sewed 56. In this replica, I carried that flag as part of the U.S. delegation procession through the main gate on liberation day. The original flag is preserved at the Mauthausen Memorial. The prisoners made it because they believed someone was coming. Someone was.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Prisoner-Made Flag</span>
+        <span class="meta-pill">56 Stars</span>
+        <span class="meta-pill">Mauthausen</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter-break">
+    <div class="chapter-break-inner">
+      <span class="chapter-number">V</span>
+      <span class="chapter-title">The Promise Renewed</span>
+    </div>
+  </div>
+
+  <!-- 20 US wreath wide -->
+  <div class="photo-item-wide" data-scroll>
+    <div class="photo-frame-wide" onclick="openLightbox('US-Mauthausen-Wreath-Laying.jpg')">
+      <img src="US-Mauthausen-Wreath-Laying.jpg" alt="US delegation wreath laying at Mauthausen with Col. Drake, Ambassador Fisher, and Ellen Germain" loading="lazy">
+      <span class="photo-number">20</span>
+    </div>
+    <div class="photo-caption-wide">
+      <div class="photo-caption-wide-text">
+        <p class="photo-role">Mauthausen Liberation Ceremony &nbsp;&middot;&nbsp; May 10, 2026 &nbsp;&middot;&nbsp; 81st Anniversary</p>
+        <p class="photo-caption">The U.S. delegation wreath laying at Mauthausen. Left to right: Col. Jonathan Drake (Defense Attach&eacute;, U.S. Embassy Vienna), U.S. Ambassador Arthur Fisher, and U.S. Special Envoy for Holocaust Issues Ellen Germain. I am visible in the background, carrying the prisoners&rsquo; flag. Ambassador Fisher later told the crowd: &ldquo;It&rsquo;s sometimes at the darkest point in life and at night that we see the light. It&rsquo;s important that as a society we remember that light, so that darkness can never return.&rdquo; As we entered with the delegation, soldiers from the delegations of former victim nations rendered honors to the American contingent, a gesture that in this place carried a weight no parade ground ceremony ever could. The applause from the crowd as we walked through the gate is something I will never forget.<br><span style="font-style:normal; font-size:0.8rem; opacity:0.6;">&#128247;: Spc. Thomas Dixon, 7th Army Training Command / DVIDS</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 21 7th Army -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2833.jpg')">
+      <img src="DSC_2833.jpg" alt="7th Army soldiers saluting at the US memorial at Mauthausen" loading="lazy">
+      <span class="photo-number">21</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">U.S. Army &nbsp;&middot;&nbsp; May 10, 2026</p>
+      <h2 class="photo-title">The Army<br>Remembers</h2>
+      <p class="photo-caption">Soldiers from the 7th Army Training Command&rsquo;s Joint Multinational Readiness Center saluting at the U.S. memorial. For the third consecutive year, active-duty American soldiers attended as color and honor guards. The wreath ribbon read: &ldquo;In Remembrance of the Liberators of the Oppressed.&rdquo; In the words of Special Envoy Germain: &ldquo;The horrors of Mauthausen remind us of the need for vigilance in combating antisemitism and protecting fundamental freedoms, because when we don&rsquo;t, unthinkable terror ensues.&rdquo;</p>
+      <div class="photo-meta">
+        <span class="meta-pill">7th Army JMRC</span>
+        <span class="meta-pill">Honor Guard</span>
+        <span class="meta-pill">US Liberator Memorial</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 22 Helen Patton -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('patton.jpg')">
+      <img src="patton.jpg" alt="Rob Pettit with Helen Ayer Patton, granddaughter of General George S. Patton Jr." loading="lazy">
+      <span class="photo-number">22</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Mauthausen &nbsp;&middot;&nbsp; May 10, 2026</p>
+      <h2 class="photo-title">Legacy<br>Generations</h2>
+      <p class="photo-caption">With Helen Patton, granddaughter of General George S. Patton, and Robert Esterley III (left), whose father was also a liberator. My grandfather&rsquo;s 26th Infantry Division served under Patton&rsquo;s Third Army. Helen walks in her grandfather&rsquo;s name at these ceremonies. This photograph carries a particular weight, as one of the very few things my grandfather would talk about was the fact he served with Gen. Patton: something he was particularly proud of for the rest of his life.<br><span style="font-style:normal; font-size:0.8rem; opacity:0.6;">&#128247;: Spc. Thomas Dixon, 7th Army Training Command / DVIDS</span></p>
+      <div class="photo-meta">
+        <span class="meta-pill">Helen Patton</span>
+        <span class="meta-pill">Third Army</span>
+        <span class="meta-pill">Mauthausen</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 23 crowd wide -->
+  <div class="photo-item-wide" data-scroll>
+    <div class="photo-frame-wide" onclick="openLightbox('Mauthausen-Crowd.jpg')">
+      <img src="Mauthausen-Crowd.jpg" alt="International procession at the Mauthausen Liberation Ceremony" loading="lazy">
+      <span class="photo-number">23</span>
+    </div>
+    <div class="photo-caption-wide">
+      <div class="photo-caption-wide-text">
+        <p class="photo-role">Mauthausen &nbsp;&middot;&nbsp; International Liberation &amp; Commemoration Ceremony &nbsp;&middot;&nbsp; May 10, 2026</p>
+        <p class="photo-caption">The international procession forming at the main roll-call grounds at Mauthausen. Delegations from dozens of nations and demographic groups carry their flags and banners. Each delegation represents a country or demographic group whose people were imprisoned or killed here. The ceremony opened with the reading of the Mauthausen Oath, taken by survivors at liberation in May 1945 and renewed at every commemoration since: a commitment to fight for a world where people live as free, equal, dignified human beings. The ceremony has grown rather than diminished in the years since the last survivors died. People keep showing up. That is the only answer there is.<br><span style="font-style:normal; font-size:0.8rem; opacity:0.6;">&#128247;: Mauthausen Memorial</span></p>
+        <div class="photo-meta">
+          <span class="meta-pill">Never Forget</span>
+          <span class="meta-pill">Never Again</span>
+          <span class="meta-pill">Mauthausen Oath</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 24 Alps -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2722.jpg')">
+      <img src="DSC_2722.jpg" alt="View of the Austrian Alps from inside the Mauthausen camp walls" loading="lazy">
+      <span class="photo-number">24</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Mauthausen &nbsp;&middot;&nbsp; Inside the Walls</p>
+      <h2 class="photo-title">The Alps<br>from Inside</h2>
+      <p class="photo-caption">The Austrian Alps visible from inside the Mauthausen camp walls. This view existed for every prisoner who stood here. The mountains are indifferent and beautiful. The SS knew it too, as officers held weddings at Mauthausen, posing for photographs with these same Alps in the background and celebrating life and love on the same hill where prisoners could see the mountains and nothing else. Beauty and atrocity occupied the same ground, at the same time, without apparent contradiction. That is perhaps the hardest thing to hold onto about this place. Such incredible beauty, yet such incredible horror.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Mauthausen</span>
+        <span class="meta-pill">The Alps</span>
+        <span class="meta-pill">Beauty and Horror</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 25 delegation -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('9674398.jpg')">
+      <img src="9674398.jpg" alt="US delegation group photo at Mauthausen, 81st Liberation Ceremony, May 10, 2026" loading="lazy">
+      <span class="photo-number">25</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The U.S. Delegation &nbsp;&middot;&nbsp; May 10, 2026</p>
+      <h2 class="photo-title">Those Who<br>Showed Up</h2>
+      <p class="photo-caption">The United States delegation at the 81st Liberation Ceremony. Ambassador Arthur Fisher, Special Envoy Ellen Germain, Col. Jonathan Drake, soldiers from the 7th Army JMRC, the Embassy Marine Guard, family members and descendants of liberators and survivors who came to stand in for those who can no longer attend. My grandfather helped liberate this place and provide medical care to those whom he could save. I carried his memory here. Hopefully future generations of affected families will continue to do so as well. It&rsquo;s the only way we can consistently remember so that we never let this happen again.<br><span style="font-style:normal; font-size:0.8rem; opacity:0.6;">&#128247;: Mauthausen Memorial</span></p>
+      <div class="photo-meta">
+        <span class="meta-pill">U.S. Delegation</span>
+        <span class="meta-pill">81st Anniversary</span>
+        <span class="meta-pill">May 10, 2026</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider"><span>Photographer&rsquo;s Note</span></div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="statement-header">
+    <h2>Note</h2>
+    <p class="title">Never Again</p>
+  </div>
+
+  <div class="statement-body">
+    <p>My grandfather never talked about Gusen or Mauthausen. Not to anyone as far as I know. He came home from the war, finished his residency, delivered thousands of babies over the following decades, and, with the exception of a few small details, took what he saw at these camps in May 1945 entirely to his grave. I didn&rsquo;t know what he had witnessed until I was an adult. I didn&rsquo;t fully understand what it meant until I stood there. I didn&rsquo;t fully understand what it meant to the survivors until I walked with our U.S. delegation at the commemoration ceremonies.</p>
+
+    <p>I made this trip partly because the 81st anniversary of the liberation was likely to be the first ceremony held without any living liberators present. The last survivors of the camps are also nearly gone. Stanis&#322;aw Zalewski, the final known surviving prisoner of the Gusen branch camp, attended the May 9 ceremony in a wheelchair. There may be no one like him at the 82nd. When that happens, the descendants alone will have to carry these memories. What remains is stone and photographs and the people who choose to show up so that we never forget. I wanted to be among them and was fortunate beyond words for this opportunity.</p>
+
+    <p>I carried a replica of the flag sewn by prisoners in the final days before liberation. They didn&rsquo;t know exactly how many stars to put on it. They sewed 56. The flag means many things, but one of them is this: the prisoners believed someone was coming. They were right. We have to continually believe that there will be people coming to oppose fascism, the denigration of fellow humans, and genocidal evil. To be wrong about that is a cost too heavy to bear.</p>
+
+    <div class="statement-section">
+      <h3>On Being Honored</h3>
+      <p>Something I was not prepared for: being thanked. When delegations from former victim nations rendered honors as we walked through the gate, when the crowd applauded, when people approached me afterward to express gratitude that America had sent people, I felt two things simultaneously and they did not resolve. Pride, for my grandfather and for what those men did. And something close to shame, because I have done nothing remotely comparable. I carried a flag through a gate. He carried the dead out of one. The ceremonies conferred on me a kind of reflected honor I am not sure I have earned, and I sat with that discomfort for the rest of the day. I still am.</p>
+      <p>What I can do is carry the memory forward and speak about what I saw. That feels like a very small thing. Standing in that place, it also felt like the only thing left.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On the Cruelty</h3>
+      <p>Auschwitz and Dachau receive the bulk of public attention: Auschwitz for the industrial scale of its killing, Dachau as the first camp and the one American journalists most famously documented. But Mauthausen and Gusen occupied a distinct category of horror. The National WWII Museum describes Mauthausen&rsquo;s reputation spreading through the entire camp system: &ldquo;In other camps, inmates began to dread a transfer to Mauthausen, after returning prisoners described the huge quarries as hell on earth.&rdquo; Its German nickname was the <em>Knochenm&uuml;hle</em>, the Bone Grinder. Prisoners who survived the Stairs of Death but outlived their usefulness were placed in rows at the cliff edge and, at gunpoint, given the choice of being shot or pushing the prisoner in front of them over the wall. Guards delighted, as the National WWII Museum records it, in hurling prisoners off the top of this wall. In winter, guards stripped prisoners and sprayed them with water, leaving them to freeze. The medical block was staffed by prisoner doctors given no medication. Dr. Aribert Heim, the camp&rsquo;s lead physician, performed operations without anesthesia for sport and kept skulls as trophies. The cruelty at Gusen, the largest subcamp, was considered by survivors to exceed even Mauthausen itself.</p>
+      <p>At Gusen, prisoners were forced to dig 8 kilometers of tunnels through solid rock in 13 months, working for Messerschmitt and Daimler to build ME 262 jet fighter components underground, out of reach of Allied bombing. Civilian engineers supervised the construction. The average lifespan of a Gusen prisoner was six months. The company that owned the quarry before the war sold it to the Nazis, then bought it back from Austria at a discount after the war and continues to operate it today. One of Gusen&rsquo;s industrial partners later changed its name to Mercedes-Benz.</p>
+      <p>This level of systematic sadism does not appear spontaneously. It is cultivated. It requires years of prior dehumanization to reach the point where an ordinary man will spray a prisoner with water and watch him freeze, and go home for dinner afterward. The museum panels document that sequence: legal exclusion, then property seizure, then civil death, then deportation, then the camps. Each stage desensitized the perpetrators and the bystanders to the next.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On the Bystanders</h3>
+      <p>This may be the most uncomfortable question Mauthausen raises, and the museum does not shy away from it. The Mauthausen Komitee &Ouml;sterreich states plainly: the subcamps, as well as the main camp itself, were supplied with groceries and building materials by local businesses. Guards were often recruited locally. Prisoners arrived by train and were then marched through the centers of towns and villages. As the Komitee notes: &ldquo;They were not easily overlooked.&rdquo;</p>
+      <p>The Mauthausen museum displays, alongside its records of atrocity, newspaper clippings about the SS soccer team, which played in a regional Austrian league and won the <em>Landesklasse Oberdonau</em> championship in 1944. A marriage certificate of an SS guard to a local girl is displayed nearby. A recorded interview with an elderly woman from the town recalls, with glistening eyes, her wedding to an SS officer, the wonderful music, the adorable men, the lovely party held 30 meters from the camp gate. In February 1945, over 500 Soviet prisoners broke out of Block 20, armed with paving stones and wet blankets. The SS initiated a manhunt joined by local police, the Wehrmacht, the home guard, and numerous civilians. Archive documents record specific civilian participation in the killings. Only 8 of the 500 escapees survived, most of them hidden by a handful of local farming families who refused to participate. The operation was cynically named the <em>M&uuml;hlviertler Hasenjagd</em>: the Hare Hunt.</p>
+      <p>These are not easy questions. Most of the people who supplied food to the camp, watched the prisoners march through town, played soccer in a league with the SS, were not personally operating the gas chambers or pushing anyone off a cliff. But they normalized what they saw. They decided, each day, that it was not their problem. Historian Gordon Horwitz, in <em>In the Shadow of Death: Living Outside the Gates of Mauthausen</em>, documents how this accommodation worked and what it cost. The question he poses, and the museum poses implicitly to every visitor, is not only &ldquo;how did the perpetrators do this?&rdquo; but &ldquo;how did their neighbors let them?&rdquo;</p>
+      <p>That question is not safely tucked away in history. It is the question that has to be asked wherever dehumanizing rhetoric normalizes itself into policy. At what point does looking away become complicity? Will you look away as people with disabilities are mocked? Will you look away as immigrants are demonized? Will you look away as people of color are specifically targeted by law enforcement? Will you look away as the people who come to the rescue of the oppressed are arrested, beaten, and killed by government agents? The people of Mauthausen did not build the camp. But they fed it, staffed it, played soccer with it, and helped hunt down those who escaped it. What will you do?</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On the Rhetoric</h3>
+      <p>I have tried in this essay to be precise about the parallel between the language that built Mauthausen and some of the political language of our own moment. I do not think precision requires false balance. The citations are in the text. When Trump said immigrants were &ldquo;poisoning the blood of our country&rdquo; (Durham, NH, December 2023) and that his opponents were &ldquo;vermin within the confines of our country&rdquo; (Veterans Day rally, November 2023), multiple historians of the Nazi period noted immediately that this was the same rhetorical logic Hitler used: not a metaphorical similarity, but the same dehumanizing structure. Identify a group as a biological contamination. Name them as an enemy within. Promise to purge them. Make the audience comfortable with imagining their removal. The goal is always the same: to make a group of people feel less than human so that violence against them becomes thinkable.</p>
+      <p>The historians did not say this is Nazi Germany. They said: we know what this sounds like. We have studied where it leads. We are saying so now, while there is still time to hear it. Mauthausen did not begin with Mauthausen. It began with speeches. This is not a partisan observation but a historical one grounded in documented evidence. The people who stood in those crowds in the 1930s were not all monsters. Most of them were ordinary people who had been given permission, little by little, to stop thinking of certain other people as fully human. That permission was granted by the silence of good citizens and in the language of a controlling political party. It can be revoked by the people too, but only if enough are paying attention.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On Photography</h3>
+      <p>I am still new to photography and actively learning. These images range from deliberate compositions made with a Nikon D7500 to phone photos grabbed in the moment during a ceremony where I was also a participant, not just a photographer. Some of the most important images in this essay, Stanis&#322;aw Zalewski, the wreath layings, the delegation moments, were made on a phone in difficult light with no second chance. I include them because the record matters more than the craft. The Bundesarchiv photograph (image 08) is a historical document held in the German Federal Archive, Bild 192-269, licensed CC-BY-SA 3.0. Several images were made by Spc. Thomas Dixon of the 7th Army Training Command and are published on <a href="https://www.dvidshub.net/">DVIDS</a>. They document moments in which I was a participant rather than a photographer, and they are credited accordingly.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>Acknowledgment</h3>
+      <p>Thank you to the Mauthausen Memorial and the Gusen Memorial Committee for organizing ceremonies that have grown more powerful as the survivors have aged and passed. Thank you to Ambassador Arthur Fisher, Special Envoy Ellen Germain, and Col. Jonathan Drake for a U.S. delegation that showed up with both solemnity and commitment. Thank you to Helen Patton for her continued presence at these commemorations. And to Stanis&#322;aw Zalewski, who came one more time: the world owes you a debt it cannot repay, but we can keep showing up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Rob Pettit &nbsp;&middot;&nbsp; 2026</p>
+  <p style="margin-top:0.5rem"><a href="http://people.cs.gmu.edu/~rpettit">people.cs.gmu.edu/~rpettit</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  const items = document.querySelectorAll('[data-scroll]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => observer.observe(el));
+
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
