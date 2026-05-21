@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>London After Dark &mdash; Rob Pettit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --deep: #111111;
+    --surface: #161616;
+    --line: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.35);
+    --text: rgba(255,255,255,0.82);
+    --bright: rgba(255,255,255,0.95);
+    --accent: #c9a96e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .intro-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.95;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .intro-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .intro-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--muted);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .intro-meta {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .intro-meta span { color: var(--accent); }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;Home
+    animation: fadeIn 1s ease 2s forwards;
+  }
+
+  .scroll-cue span {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── SEQUENCE HEADER ── */
+  .sequence-header {
+    text-align: center;
+    padding: 5rem 2rem 4rem;
+    border-top: 1px solid var(--line);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .sequence-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .sequence-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── PHOTO CARDS ── */
+  .sequence {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .photo-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 8rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .photo-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .photo-item.reverse { direction: rtl; }
+  .photo-item.reverse > * { direction: ltr; }
+
+  .photo-frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+    cursor: zoom-in;
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;Home
+    transition: transform 0.8s ease;
+  }
+
+  .photo-frame:hover img { transform: scale(1.03); }
+
+  .photo-number {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .photo-info {
+    background: var(--deep);
+    padding: 3.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-left: none;
+  }
+
+  .photo-item.reverse .photo-info {
+    border-left: 1px solid var(--line);
+    border-right: none;
+  }
+
+  .photo-role {
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .photo-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.05;
+    color: var(--bright);
+    margin-bottom: 1.5rem;
+  }
+
+  .photo-caption {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    max-width: 420px;
+  }
+
+  .photo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .meta-pill {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 0.3rem 0.75rem;
+    border-radius: 0;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto 5rem;
+    padding: 0 2rem;
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ── STATEMENT ── */
+  .statement {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 2rem 8rem;
+  }
+
+  .statement-header {
+    margin-bottom: 3rem;
+  }
+
+  .statement-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .statement-header .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--bright);
+    font-weight: 300;
+  }
+
+  .statement-body p {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .statement-section {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .statement-section h3 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .statement-section p {
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    cursor: zoom-out;
+  }
+
+  .lightbox.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    box-shadow: 0 0 80px rgba(0,0,0,0.8);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .lightbox-close:hover { color: var(--bright); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.1); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .photo-item,
+    .photo-item.reverse {
+      grid-template-columns: 1fr;
+      direction: ltr;
+    }
+
+    .photo-info {
+      border-left: 1px solid var(--line) !important;
+      border-right: 1px solid var(--line) !important;
+      border-top: none;
+    }
+
+    .photo-frame { min-height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<section class="intro">
+  <p class="intro-eyebrow">Street Photography &nbsp;&middot;&nbsp; London</p>
+  <h1 class="intro-title">London<br><em>After Dark</em></h1>
+  <p class="intro-subtitle">Eleven photographs wandering London's iconic streets after dark</p>
+  <p class="intro-meta">Rob Pettit &nbsp;<span>&middot;</span>&nbsp; London &nbsp;<span>&middot;</span>&nbsp; 2025</p>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SEQUENCE HEADER -->
+<div class="sequence-header">
+  <h2>The Sequence</h2>
+  <p>Eleven photographs from the streets of London &mdash; Soho, Piccadilly, the Underground, and the hours in between.</p>
+</div>
+
+<!-- PHOTOS -->
+<section class="sequence">
+
+  <!-- 1 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_1925-HDR.jpg')">
+      <img src="DSC_1925-HDR.jpg" alt="Motorcyclist on rain-slicked Soho street at night" loading="lazy">
+      <span class="photo-number">01</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Opening</p>
+      <h2 class="photo-title">Bar<br>Italia</h2>
+      <p class="photo-caption">Motorcycles parked outside Bar Italia in Soho &mdash; a Soho institution since the 1950s with a long history as a gathering point for riders, though it has always been more than that. Coffee, conversation, late nights. The bikes lined up outside after dark are just part of the character of the place.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Soho</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">HDR</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_1933.jpg')">
+      <img src="DSC_1933.jpg" alt="Bar Soho facade with vivid pink and green neon signage at night" loading="lazy">
+      <span class="photo-number">02</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Neon</p>
+      <h2 class="photo-title">Met her in a club <br>down in old Soho</h2>
+      <p class="photo-caption">The neon on Bar Soho &mdash; pink, yellow, red, violet against the dark facade. Soho after dark leans into its own reputation, and this is the showier face of it. The Kinks had Soho figured out &mdash; mixed up, muddled up, shook up world. It still looks the part.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Soho</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Color</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_1941.jpg')">
+      <img src="DSC_1941.jpg" alt="Couple seated outside a cafe at night, woman gazing through the window" loading="lazy">
+      <span class="photo-number">03</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Observation</p>
+      <h2 class="photo-title">Looking<br>Elsewhere</h2>
+      <p class="photo-caption">A couple at an outdoor table, engaged with each other and oblivious to me. The woman inside is a different story &mdash; she's looking out through the glass, possibly directly at me. Two separate worlds separated by a pane of glass, neither one aware of the other.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Soho</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Candid</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_1953.jpg')">
+      <img src="DSC_1953.jpg" alt="Dark figure leaning against a wall in a Soho alley beneath a lit Sex Shop sign" loading="lazy">
+      <span class="photo-number">04</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Grit</p>
+      <h2 class="photo-title">Werewolves<br>of London</h2>
+      <p class="photo-caption">A dark figure leaning against a wall in a Soho alley, the only light coming from the sign above. This is the other side of Soho &mdash; the part that hasn't been gentrified away.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Soho</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Gritty</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_1936.jpg')">
+      <img src="DSC_1936.jpg" alt="Two women walking and talking through a lit covered passage in Soho at night" loading="lazy">
+      <span class="photo-number">05</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Passage</p>
+      <h2 class="photo-title">Soho<br>Passage</h2>
+      <p class="photo-caption">A covered walkway somewhere in Soho &mdash; string lights along the ceiling, two women mid-conversation, completely unaware of the camera. I loved the geometry and symmetry here. </p>
+      <div class="photo-meta">
+        <span class="meta-pill">Soho</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Candid</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_1969.jpg')">
+      <img src="DSC_1969.jpg" alt="Colors of London nightlife reflecting in rain-wet pavement" loading="lazy">
+      <span class="photo-number">07</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Reflection</p>
+      <h2 class="photo-title">The Street<br>Gives Back</h2>
+      <p class="photo-caption">A little mist on the cobblestones. Reflections of taillights, stoplights, and storefronts mix on the wet street. You only really see this using a low angle from the street surface.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Soho</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Low Angle</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_1982.jpg')">
+      <img src="DSC_1982.jpg" alt="Illuminated pedicab at Piccadilly Circus surrounded by neon and crowds" loading="lazy">
+      <span class="photo-number">07</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Spectacle</p>
+      <h2 class="photo-title">Piccadilly<br>Circus</h2>
+      <p class="photo-caption">There's no shortage of great photographs of Piccadilly Circus &mdash; the crowds, the billboards, the controlled chaos. I was looking for something different, though, when the pink pedicab entered the roundabout. A mom and her two kids, completely at home in the middle of all of it.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Piccadilly Circus</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Pedicab</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2002.jpg')">
+      <img src="DSC_2002.jpg" alt="London Underground train entering station, motion blur on yellow lines" loading="lazy">
+      <span class="photo-number">08</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Underground</p>
+      <h2 class="photo-title">Mind<br>the Gap</h2>
+      <p class="photo-caption">A train entering Piccadilly Circus station on the Underground, the motion blur pulling the eye along the yellow lines on the platform edge.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">The Tube</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Piccadilly Circus Underground</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2071.jpg')">
+      <img src="DSC_2071.jpg" alt="Silhouetted figure at the far end of a dark tunnel, pinpoint of light beyond" loading="lazy">
+      <span class="photo-number">09</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Passage</p>
+      <h2 class="photo-title">End of<br>the Tunnel</h2>
+      <p class="photo-caption">The tunnel under the Serpentine Bridge in Kensington Gardens &mdash; two figures walking together at the far end, silhouetted against the light beyond. An accidental discovery as I was about to cross the bridge when I noticed the path leading underneath and the resulting tunnel.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Kensington Gardens</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Silhouette</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2135.jpg')">
+      <img src="DSC_2135.jpg" alt="Upscale food hall inside a deconsecrated church, warm light and crowds at night" loading="lazy">
+      <span class="photo-number">10</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Repurposing</p>
+      <h2 class="photo-title">Sacred<br>and Profane</h2>
+      <p class="photo-caption">A food hall built into a deconsecrated church &mdash; Mercato Mayfair &mdash; warm light, signage for dumplings and ramen, people crowded around tables under vaulted ceilings that once held something else entirely. London does this kind of repurposing without apology, and the result is usually fantastic.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">London</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Interior</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2165.jpg')">
+      <img src="DSC_2165.jpg" alt="London black cab headlights coming toward camera on a quiet night street" loading="lazy">
+      <span class="photo-number">11</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Closing</p>
+      <h2 class="photo-title">London<br>Black Cabs</h2>
+      <p class="photo-caption">The black cab coming toward the camera, headlights cutting through the dark. Classic London.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">London</span>
+        <span class="meta-pill">Night</span>
+        <span class="meta-pill">Black Cab</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider"><span>Artist Statement</span></div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="statement-header">
+    <h2>Statement</h2>
+    <p class="title">London After Dark</p>
+  </div>
+
+  <div class="statement-body">
+    <p>I've been to London several times, and have taken the iconic postcard shots &mdash; Tower Bridge; the Guards outside Buckingham Palace; Big Ben; etc. They're iconic for a reason. But at some point you realize that the London worth photographing isn't the one in the guidebook. It's the one that comes out after the tour buses leave.</p>
+
+    <p>London has some of the best nightlife in the world if you know where to look, and it's layered on top of architecture and streets that have been there for centuries. Soho after dark is something completely different from Soho at noon. Piccadilly Circus, which is almost impossible to photograph without it looking like a cliché in daylight, becomes something stranger and more interesting when it's just neon and people who have somewhere to be. The Underground stops looking like a commuter system and starts looking like something out of a film.</p>
+
+    <p>These eleven photographs are from wandering through Kensington Gardens, Mayfair, Piccadilly Circus, and Soho. The on and off misty rain helped with reflections. The contrast of color, clubs, and grit in Soho was around every corner.</p>
+
+    <p>The sequence moves from the gritty (the wet streets of Soho, the alleys, the neon) through the iconic (Piccadilly, the Tube) and into something quieter toward the end with the tunnel, the deconsecrated church turned food hall, and the black cab in the dark. Not quite a narrative, but I tried to capture the most authentic vibes from my walk that night.</p>
+
+    <div class="statement-section">
+      <h3>On Shooting at Night</h3>
+      <p>The D7500 with the 35mm prime &mdash; a 50mm equivalent on the crop sensor &mdash; turned out to be an excellent combination for this. Low light in Soho didn't require pushing the ISO as hard as I expected. ISO 650 was as high as I had to go and that was for the dark Soho alley photo. This prime lens is my favorite for street photography and certainly performed well at night.</p>
+    </div>
+
+    <div class="statement-section">
+      <h3>On HDR</h3>
+      <p>A few of the shots, including the opening one at Bar Italia, are HDR composites. The D7500 supports auto exposure bracketing, so I shot three frames and merged them in Lightroom to pull the best of each exposure into a single image. In any one image, lit signage, dark storefronts, pools of light and shadows may be over- or under-exposed. Using the HDR technique, I can pull in the best aspects of all three exposure levels as my baseline and work from there on the finished photo.</p>
+    </div>
+
+  
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Rob Pettit &nbsp;&nbsp;&middot;&nbsp;&nbsp; London &nbsp;&middot;&nbsp; 2026</p>
+  <p style="margin-top:0.5rem"><a href="https://robpettit.us">robpettit.us</a></p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  const items = document.querySelectorAll('[data-scroll]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => observer.observe(el));
+
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
