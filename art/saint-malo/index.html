@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saint-Malo &mdash; Rob Pettit</title>
+<meta name="description" content="Seventeen photographs from the walled port city of Saint-Malo, Brittany. Coast, ramparts, ancient streets, and the Atlantic light.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --deep: #111111;
+    --surface: #161616;
+    --line: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.35);
+    --text: rgba(255,255,255,0.82);
+    --bright: rgba(255,255,255,0.95);
+    --accent: #c9a96e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--bright); }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 2rem;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  nav a {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  .intro {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .intro-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    line-height: 0.95;
+    color: var(--bright);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .intro-title em { font-style: italic; color: var(--accent); }
+
+  .intro-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--muted);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+
+  .intro-meta {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1s ease 2s forwards;
+  }
+
+  .scroll-cue span {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  .context {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .context-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .context p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+
+  .context p:first-of-type::first-letter {
+    font-size: 4em;
+    float: left;
+    line-height: 0.75;
+    margin: 0.05em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+  }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin: 4rem auto 4rem;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .section-divider span {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .sequence-header {
+    text-align: center;
+    padding: 3rem 0 4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .sequence-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .sequence-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .sequence {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .photo-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 8rem;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .photo-item.visible { opacity: 1; transform: translateY(0); }
+  .photo-item.reverse { direction: rtl; }
+  .photo-item.reverse > * { direction: ltr; }
+
+  .photo-frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--deep);
+    cursor: zoom-in;
+  }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+    filter: brightness(0.92);
+  }
+
+  .photo-frame:hover img { transform: scale(1.03); filter: brightness(1); }
+
+  .photo-number {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    background: rgba(8,8,8,0.7);
+    padding: 0.2rem 0.5rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .photo-section-tag {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(201,169,110,0.6);
+    background: rgba(8,8,8,0.7);
+    padding: 0.2rem 0.6rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .photo-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+
+  .photo-role {
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .photo-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.1;
+    color: var(--bright);
+    margin-bottom: 1.8rem;
+  }
+
+  .photo-caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.75;
+    border-left: 1px solid var(--accent);
+    padding-left: 1.2rem;
+  }
+
+  .photo-meta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 0.3rem 0.8rem;
+  }
+
+  .statement {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem 8rem;
+  }
+
+  .statement-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .statement-header h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .statement-header .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--bright);
+    line-height: 1.1;
+  }
+
+  .statement-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+
+  .statement-body p:first-child::first-letter {
+    font-size: 4em;
+    float: left;
+    line-height: 0.75;
+    margin: 0.05em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+  }
+
+  .statement-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .statement-section h3 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--line);
+  }
+
+  footer p {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  footer a { color: var(--accent); }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    backdrop-filter: blur(6px);
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem;
+    right: 2rem;
+    color: var(--muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-weight: 200;
+    transition: color 0.2s;
+    font-family: 'Raleway', sans-serif;
+    background: none;
+    border: none;
+  }
+
+  .lightbox-close:hover { color: var(--bright); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50%       { opacity: 1; }
+  }
+
+  @media (max-width: 900px) {
+    .photo-item, .photo-item.reverse { grid-template-columns: 1fr; direction: ltr; }
+    .photo-frame { aspect-ratio: 4/3; }
+    .photo-info { padding: 2.5rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../../index.html">&#8592; Rob Pettit</a>
+  <a href="../index.html">Art Projects</a>
+</nav>
+<div style="height:3.5rem;"></div>
+
+<section class="intro">
+  <p class="intro-eyebrow">Travel Photography &mdash; 2026</p>
+  <h1 class="intro-title">Saint-<em>Malo</em></h1>
+  <p class="intro-subtitle">Brittany, France &nbsp;&middot;&nbsp; Walled city on the Atlantic edge</p>
+  <p class="intro-meta">Rob Pettit</p>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="context" data-scroll>
+  <div class="context-label">The Place</div>
+  <p>Saint-Malo is a walled port city on the Brittany coast, built on a granite island connected to the mainland by a causeway. For centuries it was the home base of the corsairs &mdash; French privateers or essentially, pirates with paperwork. These corsairs were licensed by Louis XIV to attack enemy shipping on behalf of the French crown. I was there for a conference. Most of the shooting happened in the blue or golden hours before or after the conference sessions.</p>
+</div>
+
+<div class="sequence-header">
+  <h2>The Sequence</h2>
+  <p>Seventeen photographs moving from the tidal coast through the walls and streets to last light on the ramparts.</p>
+</div>
+
+<section class="sequence">
+
+  <div class="section-divider"><span>I &mdash; The Tidal Coast</span></div>
+
+  <!-- 01 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('01-posts.jpg')">
+      <img src="01-posts.jpg" alt="Fort National seen through weathered wooden posts on the beach" loading="lazy">
+      <span class="photo-number">01</span>
+      <span class="photo-section-tag">The Tidal Coast</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Shore</p>
+      <h2 class="photo-title">Through<br>the Posts</h2>
+      <p class="photo-caption">Fort National seen through weathered wood rising from the tidal sand. The beach sits just outside the city walls &mdash; step through any gate in the ramparts and this is where you end up at low tide, looking out at a granite fortress sitting alone on its island. The fortress was built to protect the city from the English and Dutch raiders.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Saint-Malo Beach</span>
+        <span class="meta-pill">Low Tide</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2976-2.jpg')">
+      <img src="DSC_2976-2.jpg" alt="Tidal rock pool reflecting the sky, rocks and sea beyond" loading="lazy">
+      <span class="photo-number">02</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Tide's Work</p>
+      <h2 class="photo-title">Sky in<br>the Rock</h2>
+      <p class="photo-caption">At low tide the sea leaves behind a second sky. The pool in the foreground mirrors light and clouds; the Atlantic rolls in behind it. With the extraordinary tidal shifts on the Brittany coast, Saint-Malo presents two completely different landscapes between low and high tide.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Tidal Rocks</span>
+        <span class="meta-pill">Low Tide</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_2983.jpg')">
+      <img src="DSC_2983.jpg" alt="Cathedral spire rising above the walled city, seen through a gap in the tidal rocks" loading="lazy">
+      <span class="photo-number">03</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">City and Sea</p>
+      <h2 class="photo-title">The Spire<br>from the Shore</h2>
+      <p class="photo-caption">The cathedral spire rising above the ramparts, seen through a gap in the tidal rocks. The Cath&eacute;drale Saint-Vincent is visible from almost everywhere in Saint-Malo &mdash; including from well out on the tidal shelf at low tide.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Tidal Shelf</span>
+        <span class="meta-pill">Low Tide</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3001.jpg')">
+      <img src="DSC_3001.jpg" alt="The walled city of Saint-Malo seen from the tidal rocks, Atlantic breaking against the base of the walls" loading="lazy">
+      <span class="photo-number">04</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Full Picture</p>
+      <h2 class="photo-title">City on<br>the Rocks</h2>
+      <p class="photo-caption">The walled city from the tidal flat between the fort and the city, looking back toward the ramparts &mdash; the Atlantic breaking against the base of the rocks, the walls and towers above. This is the view from the exposed tidal shelf with Fort National at your back.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Tidal Shelf</span>
+        <span class="meta-pill">Low Tide</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3011.jpg')">
+      <img src="DSC_3011.jpg" alt="Fort National island fortress seen from close range across tidal pools" loading="lazy">
+      <span class="photo-number">05</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Fort National</p>
+      <h2 class="photo-title">Only<br>at Low Tide</h2>
+      <p class="photo-caption">Fort National sits on its own granite island a few hundred yards off the ramparts. It was designed in 1689 by Vauban, Louis XIV's chief military engineer, during the same Sun King era that produced Versailles. You can walk to it only when the tide allows. The tidal pools in the foreground are the tide's receipt.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Fort National</span>
+        <span class="meta-pill">Low Tide</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>II &mdash; The Walls</span></div>
+
+  <!-- 06 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3018.jpg')">
+      <img src="DSC_3018.jpg" alt="Atlantic waves breaking against a low tidal wall, city ramparts visible in background" loading="lazy">
+      <span class="photo-number">06</span>
+      <span class="photo-section-tag">The Walls</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Stone and Sea</p>
+      <h2 class="photo-title">What the Walls<br>Are For</h2>
+      <p class="photo-caption">The Atlantic breaking against a low section of wall that's exposed only at low tide. This was shot from the tidal flat with Fort National behind me and the city ahead, with the low wall used as a leading line. The city ramparts are in the background. A high shutter speed captures the wave breaking against the wall.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Break Wall</span>
+        <span class="meta-pill">Low Tide</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3077.jpg')">
+      <img src="DSC_3077.jpg" alt="Café du Lion d'Or with people at outdoor tables in the Place Chateaubriand, French flag flying" loading="lazy">
+      <span class="photo-number">07</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Life Here</p>
+      <h2 class="photo-title">Café du<br>Lion d'Or</h2>
+      <p class="photo-caption">Saint-Malo is not a museum. People live inside these walls, fill the cafés, shop for groceries, and watch football in the bars. During the day, it can be crowded with tourists. The locals come out in the evening to their favorite spots. This is the only photograph in the sequence where I captured the people vs. the architecture in what I thought was a most authentic setting.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Inner City</span>
+        <span class="meta-pill">Evening</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>III &mdash; Inside the Walls</span></div>
+
+  <!-- 08 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3058.jpg')">
+      <img src="DSC_3058.jpg" alt="Looking down a staircase into a narrow cobblestone lane, two figures in the distance, black and white" loading="lazy">
+      <span class="photo-number">08</span>
+      <span class="photo-section-tag">Inside the Walls</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Lanes</p>
+      <h2 class="photo-title">Down<br>the Stairs</h2>
+      <p class="photo-caption">Looking down into one of the inner city's narrow lanes from a staircase above. Two figures in the distance give a sense of scale &mdash; the lane is barely wider than a cart. Shot in black and white to highlight the geometry and texture.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Inner City</span>
+        <span class="meta-pill">Black and White</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3094.jpg')">
+      <img src="DSC_3094.jpg" alt="Graffiti-covered wall and staircase in a corner of the inner city, black and white" loading="lazy">
+      <span class="photo-number">09</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Other Side</p>
+      <h2 class="photo-title">Modern<br>City</h2>
+      <p class="photo-caption">Not every corner of Saint-Malo is postcard-ready. This corner of the inner city has been thoroughly marked up &mdash; graffiti and stickers layered over time. In Europe this tends to be treated as free expression rather than the territorial marking Americans often associate with it. </p>
+      <div class="photo-meta">
+        <span class="meta-pill">Inner City</span>
+        <span class="meta-pill">Graffiti</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3081.jpg')">
+      <img src="DSC_3081.jpg" alt="Looking through a stone archway into a lit street beyond, people walking at dusk" loading="lazy">
+      <span class="photo-number">10</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Passage</p>
+      <h2 class="photo-title">Through<br>the Arch</h2>
+      <p class="photo-caption">Saint-Malo is a city of thresholds &mdash; gates in walls, arches over lanes, passages between one space and another. The street beyond this arch is lit and inhabited; the arch itself is in shadow.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Inner City</span>
+        <span class="meta-pill">Evening</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3083-2.jpg')">
+      <img src="DSC_3083-2.jpg" alt="Wide cobblestone lane in the inner city, empty in the early morning light" loading="lazy">
+      <span class="photo-number">11</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Streets</p>
+      <h2 class="photo-title">Stone<br>and Light</h2>
+      <p class="photo-caption">The inner city lanes open occasionally into something a little wider &mdash; cobblestones, high facades, the particular quality of Atlantic morning light on pale Breton granite cobblestones. Empty here, which is rare, but a testimony to the early morning quiet before tourists. Saint-Malo in summer is crowded; this moment of stillness was brief and early.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Inner City</span>
+        <span class="meta-pill">Early Morning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3026.jpg')">
+      <img src="DSC_3026.jpg" alt="The walled city of Saint-Malo with the cathedral spire reflected in a tidal pool, green rocks in the foreground" loading="lazy">
+      <span class="photo-number">12</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The View Back</p>
+      <h2 class="photo-title">The<br>Reflection</h2>
+      <p class="photo-caption">Looking back at the walled city from the tidal flat. You can see the cathedral spires reflected in rippling water at the base of the ramparts. If you look closer, you can make out the city walls reflected where the color changes in the water. This is one of the tidal pools that forms at low tide and lasts for a few hours.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Tidal Flat</span>
+        <span class="meta-pill">Low Tide</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3114.jpg')">
+      <img src="DSC_3114.jpg" alt="Cathedral spire rising above the narrow streets at blue hour, city in silhouette" loading="lazy">
+      <span class="photo-number">13</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Evening</p>
+      <h2 class="photo-title">Blue<br>Hour</h2>
+      <p class="photo-caption">The Cath&eacute;drale Saint-Vincent spire in the last of the blue-hour light. The same landmark that appeared above the tidal rocks earlier in the sequence &mdash; seen now from inside the city it watches over, the streets quiet beneath it.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Cath&eacute;drale Saint-Vincent</span>
+        <span class="meta-pill">Blue Hour</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3143.jpg')">
+      <img src="DSC_3143.jpg" alt="H&ocirc;tel France et Chateaubriand at dusk, cobblestone square, café tables" loading="lazy">
+      <span class="photo-number">14</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Last Light Inside</p>
+      <h2 class="photo-title">H&ocirc;tel<br>Chateaubriand</h2>
+      <p class="photo-caption">The H&ocirc;tel France et Chateaubriand at dusk, just outside the inner city walls. Fran&ccedil;ois-Ren&eacute; de Chateaubriand was born in Saint-Malo in 1768 and became the founding figure of French Romanticism &mdash; think of him as the literary equivalent of Beethoven at the same period. He is buried on Grand B&eacute;, the small tidal island visible from the ramparts. He asked to be buried facing the sea.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Outside the Walls</span>
+        <span class="meta-pill">Dusk</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>IV &mdash; Last Light</span></div>
+
+  <!-- 15 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3155.jpg')">
+      <img src="DSC_3155.jpg" alt="Fort National seen from the ramparts in afternoon light, tidal rocks and sea" loading="lazy">
+      <span class="photo-number">15</span>
+      <span class="photo-section-tag">Last Light</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Return to the Shore</p>
+      <h2 class="photo-title">Fort National<br>from the Walls</h2>
+      <p class="photo-caption">Fort National from the rampart walk in the late afternoon light. The same fortress that opened the sequence, now seen from above, the rocks around it still exposed.</p>
+      <div class="photo-meta">
+        <span class="meta-pill">Rampart Walk</span>
+        <span class="meta-pill">Afternoon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16 -->
+  <div class="photo-item reverse" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3156.jpg')">
+      <img src="DSC_3156.jpg" alt="Fort National at golden hour, tidal flats glowing, single figure on the causeway" loading="lazy">
+      <span class="photo-number">16</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">Golden Hour</p>
+      <h2 class="photo-title">Fort National<br>at Golden Hour</h2>
+      <p class="photo-caption">The same fortress in the last warm light of the evening, the tidal flats spread wide and glowing around it. A lone couple on the causeway making their way across before the tide returns. </p>
+      <div class="photo-meta">
+        <span class="meta-pill">Fort National</span>
+        <span class="meta-pill">Golden Hour</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 17 -->
+  <div class="photo-item" data-scroll>
+    <div class="photo-frame" onclick="openLightbox('DSC_3198-HDR-2.jpg')">
+      <img src="DSC_3198-HDR-2.jpg" alt="Rampart walkway heading southeast into the rising sun, Fort National to the left at sunrise" loading="lazy">
+      <span class="photo-number">17</span>
+    </div>
+    <div class="photo-info">
+      <p class="photo-role">The Close</p>
+      <h2 class="photo-title">Sunrise<br>on the Ramparts</h2>
+      <p class="photo-caption">The rampart promenade heading southeast into the rising sun, Fort National to the left and the tidal flats lit in the low early light below. I had taken an early morning walk through the inner city and was walking back toward my hotel past the Palais du Grand Large. </p>
+      <div class="photo-meta">
+        <span class="meta-pill">Rampart Walk</span>
+        <span class="meta-pill">Sunrise</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="section-divider"><span>Notes</span></div>
+
+<section class="statement">
+  <div class="statement-header">
+    <h2>On the Work</h2>
+    <p class="title">Saint-Malo</p>
+  </div>
+
+  <div class="statement-body">
+    <p>I had been to Saint-Malo once before and taken the typical tourist shots &mdash; the ramparts, the cathedral, Fort National from a distance. This time I wanted to do something a bit more intentional with it. After taking a photography class at GMU, I came in with a better sense of how to look at a place, more patience for the light, and a real interest in getting at the character of the city rather than just documenting that I had been there. My landscape photography still has a way to go, but I continue to really enjoy street photography and playing with light.</p>
+
+    <p>Saint-Malo is built on a granite island connected to the mainland by a causeway. The island itself has been inhabited since the 6th century, when a Welsh monk named Malo established a settlement there. By the 17th and 18th centuries the city had become notorious as the home base of the corsairs, privateers licensed by Louis XIV to attack enemy shipping on behalf of the French crown. That wealth built the ramparts, the grand stone townhouses, and the cathedral. The city's motto captures the attitude well: <em>Ni Fran&ccedil;ais, ni Breton, Malouin suis</em> &mdash; Neither French, nor Breton, but from Saint-Malo am I.</p>
+
+    <p>The waters around Saint-Malo have one of the largest tidal ranges in the world &mdash; regularly 33 to 40 feet (10 to 12 meters), and up to 46 feet (14 meters) during spring tides. At low tide the sea retreats hundreds of yards, exposing a landscape of rock, sand, and tidal pools that simply doesn't exist a few hours later. The rocks, the reflections, and the isolated fortresses in these photographs only appear this way because of the tide.</p>
+
+    <p>The city was nearly destroyed in August 1944 during the Allied liberation. Roughly 80% of the intra-muros (the walled inner city) was reduced to rubble. What stands today is a meticulous reconstruction, completed by the 1960s, built stone by stone to match the original. It looks old because it was deliberately made to look old.</p>
+
+    <p>I was there for a conference, which shaped the photography by my free time. Most of the shooting happened in before or after sessions in the early mornings and evenings. The benefit is that I ended up in the city at the hours when the light is most interesting.</p>
+
+    <p>The sequence moves from the exposed tidal coast inward through the city gates, through the streets of the inner city, and back out to the rampart walk at sunrise. That is more or less the order in which you would experience the place on foot.</p>
+
+    <div class="statement-section">
+      <h3>Equipment</h3>
+      <p>All photographs made with a Nikon D7500. The coastal and rampart sequences were shot with the 18&ndash;140mm zoom; the street work inside the walls primarily with the 35mm f/1.8 prime. Several of the golden hour and sunrise images were processed as HDR merges from bracketed exposures to better capture the dynamic range between sky and tidal flat at those hours.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Rob Pettit &nbsp;&nbsp;&middot;&nbsp;&nbsp; Travel Photography &nbsp;&middot;&nbsp; 2026</p>
+  <p style="margin-top:0.5rem"><a href="https://robpettit.us">robpettit.us</a></p>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  const items = document.querySelectorAll('[data-scroll]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => observer.observe(el));
+
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>
